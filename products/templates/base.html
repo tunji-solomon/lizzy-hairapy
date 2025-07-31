@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static '../static/css/boostrap.min.css'%}">
+    <link rel="stylesheet" href="{% static '../static/css/style.css' %}">
+    {% block title %} {% endblock %}
+</head>
+<body>
+    <div class="logo-navbar-container">
+        <a href="{% url 'home' %}"><img class="img-logo" src="{% static '../static/images/WhatsApp_Image_2025-06-05_at_9.54.01_AM-removebg-preview.webp' %}" alt="Logo"></a>
+        <div class="navbar-container">
+            
+            <a class="navbar-items" href="#"><i class="fa-solid fa-user" ></i></a>
+            <a class="navbar-items" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a class="navbar-items" href="#"><i class="fa-solid fa-right-to-bracket"></i></a>
+            
+        </div>
+    </div>
+    
+    {% block content %}
+
+    {% endblock %}
+    <script src="{% static '../static/js/index.js' %}"></script>
+    <script src="https://kit.fontawesome.com/3df687ad82.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

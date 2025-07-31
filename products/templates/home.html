@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} home-page {% endblock %}
+{% block content %}
+    <style>
+        header {
+            background-image: url("{% static "../static/images/Happy-woman-holding-out-hair-1296x728-header-1296x728.webp"%}")
+        }
+    </style>
+    <header class="header" style="background-image: ">
+        <h1 class="header_title">
+            LIZZY HAIRAPY
+        </h1>
+        <p class="header_description">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium, quaerat nobis?
+                Illum non voluptates in odio. Ab rem,porro sequi delectus ea vel, incidunt sapiente autem,
+                inventore dolorem natus iusto.
+        </p>
+            <form method="POST" class="search-bar-container">
+                {% csrf_token %}
+                <input type="text" placeholder="Enter search" class="search-bar" name="search">
+                <button  type="submit"class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        
+    </header>
+    <section class="products-display">
+        <div class="filter-section">
+            <h1 class="all-products-header">
+                Check out our products
+            </h1>
+            <div class="filter-container">
+                <form method="POST" class-"filter-form">
+                    {% csrf_token %}
+                    <input type="radio" name="price" value=">" class="filter-radio">greater than
+                    <input type="radio" name="price" value="<" class="filter-radio">less than
+                    <input type="text" name="price-field"placeholder="price" class="filter-price">
+                    <input type="text" name="category"list="categories" placeholder="category" class="filter-category">
+                    <datalist id="categories">
+                        {% if categories %}
+                            {% for category in categories %}
+                                <option value="{{category}}">
+                            {% endfor %}
+                        {% endif %}
+                    </datalist>
+                    <button type="submit">find</button>
+            </div>
+        </div>
+        {% if products %}
+            <div class="products-container">
+                {% for product in products %}
+                    <div class="products">
+                        <div class="img-container">
+                            <div class="img-alt"></div>
+                            <img src="{{product.image_url}}" alt="Hair 1" class="hair-img">
+                        </div>
+                        <h3 class="hair-title">{{product.name}}</h3>
+                        <p class="hair-price">#{{product.price}}</p>
+                        <div class="qty-btn">
+                            <p class="qty-title">Quantity </p>
+                            <div class="qty-control-container">
+                                <button class="qyt-decrease-btn button" onclick="quantityBtn('decrease', '{{product.name}}')">-</button>
+                                <input type="text" value= "0" class="qty-selected" id="{{product.name}}">
+                                <button class="qty-increase-btn button" onclick="quantityBtn('increase', '{{product.name}}')">+</button>
+                            </div>
+                        </div>
+                        <button class="add-to-cart button">Add to cart</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

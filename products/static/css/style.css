@@ -1,0 +1,856 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #f7f7f7;
+    padding-top: 80px;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    /* background-image: url("./images/Happy-woman-holding-out-hair-1296x728-header-1296x728.webp"); */
+    background-repeat: no-repeat;
+    height: 480px;
+    background-size: cover;
+    background-position: center top;
+    padding-top: 180px;
+    box-shadow: 0px -1px 0.5px 0.5px rgba(60, 59, 59, 0.7) inset;
+    background-color: rgba(0,0,0,0.55);
+    background-blend-mode: overlay;
+    margin-bottom: 0px;
+}
+
+.logo-navbar-container {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    background-color: #f7f7f7;
+    box-shadow: 2px 0px 2px 1px rgb(51, 51, 51);
+    position:fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+.header_title {
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 3.5rem;
+    margin-top: 50px;
+}
+.header_description {
+    margin-bottom: 50px;
+    color: white;
+
+}
+
+.img-logo {
+    width: 7rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    cursor: pointer;
+
+}
+
+.navbar-container{
+    padding: 20px;
+    margin-left: auto;
+
+}
+
+.navbar-items {
+    color: black;
+    font-size: 1.5rem;
+    margin-right: 15px;
+}
+
+.navbar-items:hover {
+    color: #ff14d0ac;
+    transition: 0.5s;
+}
+
+.navbar-items:active {
+    color: #f9c0ede5;
+    transition: 0.5s;
+}
+
+.search-bar-container {
+    display: flex;
+    width: 50%;
+}
+.search-bar {
+    width: 100%;
+    border: none;
+    padding:10px;
+    border-radius: 10px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    box-shadow: 5px 0px 10px 1px;
+    background-color: #f7f7f7f1;
+}
+
+.search-bar:focus,
+.filter-price:focus,
+.filter-category:focus {
+    outline: none;
+}
+
+.btn-search,
+.filter-radio {
+    width: fit-content;
+    padding: 9px 10px;
+    font-size: 1rem;
+    border: none;
+    background-color: #f7f7f7f1;
+    border-left: 0.5px solid;
+    color: #2d2d2d;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    cursor: pointer;
+}
+.btn-search:hover,
+.filter-radio {
+    background-color: #e5e2e2;
+}
+
+
+.btn-search:active,
+.filter-radio {
+    background-color: #c2bebe;
+}
+
+.filter-radio {
+    color: #2d2d2d;
+}
+
+.products-display {
+    text-align: center;
+}
+
+.all-products-header {
+    font-size: 2rem;
+    margin-top: 50px;
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    margin: 50px 20px;
+    margin-bottom: 200px;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    border: 0.2px solid rgb(50, 50, 50);
+
+}
+
+.products {
+    height: 400px;
+    border: 0.5px solid #3b3b3b;
+}
+
+.img-container {
+    width: 100%;
+    height: 51%;
+
+}
+
+.hair-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-alt {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.qty-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 19.5px;
+    height: 5%;
+    align-items: center;
+    border: 0.5px solid rgb(61, 60, 60);
+    border-right: none;
+    border-left: none;
+}
+
+.qty-title {
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.qty-selected {
+    border:none;
+    height: 25px;
+    margin: 0px 10px;
+    text-align: center;
+    font-size: 0.75rem;
+    width: 30%;
+}
+
+.qty-selected:focus {
+    outline: none;
+}
+
+.button {
+    width: 40px;
+    border: none;
+    background-color: rgb(63, 62, 62);
+    color: white;
+    border-radius: 1000%;
+    height: 20px;
+}
+
+.qty-increase-btn {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    width: 20%;
+    cursor: pointer;
+}
+
+.qyt-decrease-btn{
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    margin-left: 10px;
+    width: 20%;
+    cursor: pointer;
+}
+
+
+
+.add-to-cart {
+    width: 100%;
+    border-radius: 0px;
+    height: 10.5%;
+    background-color: rgb(165, 10, 10);
+}
+
+/* .products-container {
+    margin: 30px;
+    padding: 30px;
+    margin-right: 30px;
+    border : 0.5px solid rgba(0,0,0,0.2);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+
+}
+
+.products {
+    width: 100%;
+    height: 350px;
+    border: 2px solid red;
+    display: grid;
+    justify-content: center;
+}
+
+.hair-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.hair-title {
+    margin: 5px 0px;
+}
+
+.hair-price {
+    margin-top: 0px;
+    margin-bottom: 5px
+}
+
+.qty-btn {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+    padding: 0px 20px;
+    margin-top: 0px;
+    border: 2px solid blue;
+}
+
+.qty-title {
+    flex: 1;
+}
+
+.qyt-decrease-btn,
+.qty-increase-btn,
+.qty-selected {
+    flex: 1;
+    width: 25px;
+    height: 20px;
+}
+
+.qty-selected {
+    flex: 1;
+
+} */
+
+/* 
+@media (min-width: 300px) and (max-width: 699px ) {
+
+    .header_title {
+        font-size: 2rem;
+    }
+
+    .img-logo {
+
+        width: 3.5rem;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .navbar-items {
+        font-size: medium;
+    }
+
+    .header {
+        margin-top: -30px;
+        height: 300px;
+    }
+
+    .all-products-header {
+        font-size:  1.5rem;
+    }
+
+    .products-container {
+
+        grid-template-columns: repeat(2, 1fr);
+        gap:10px;
+        justify-self: center;
+        
+    }
+
+    .products {
+        min-width: none;
+        margin-right: 0px;
+        margin-left: 0px;
+        height: 250px;
+        margin-bottom: 3px;
+    }
+    .hair-title,
+    .hair-price {
+        font-size: medium;
+        margin: 10px;
+    }
+
+    .qty-btn {
+        padding: 7px;
+        height: 5%;
+        align-items: center;
+
+    }
+
+    .qty-title {
+        margin-right: 5px;
+        font-size: small;
+    }
+
+    .qty-selected {
+        width: 15px;
+        border:none;
+        height: fit-content;
+        margin: 0px 5px;
+        text-align: center;
+    }
+
+    .button {
+        width: 20px;
+        background-color: rgb(63, 62, 62);
+        color: white;
+        border-radius: 1000%;
+        height: fit-content;
+    }
+
+    .qty-increase-btn {
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+
+    .qyt-decrease-btn{
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 0px;
+        margin-left: 3px;
+    }
+
+    .add-to-cart {
+        width: 100%;
+        border-radius: 0px;
+        height: 10.5%;
+        background-color: rgb(165, 10, 10);
+    }
+
+  
+} */
+
+
+@media (min-width: 300px) and (max-width: 500px) {
+    
+    .img-logo {
+
+        width: 3.5rem;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .products-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 0px;
+        margin: 0px 10px;
+        padding: 20px
+    }
+    .products{
+        height: 200px;
+        width: 100%;
+    }
+
+    .qty-control-container {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .hair-price,
+    .hair-title {
+        margin: 3px;
+        font-size: small;
+        
+    }
+
+    .qty-btn {
+        padding: 12px 2px;
+        justify-content: space-between;
+        gap: 5px;
+    }
+
+    .qty-title {
+        font-size: 0.7rem;
+    }
+
+    .qty-increase-btn,
+    .qyt-decrease-btn{
+        text-align: center;
+        margin: 0px;
+    }
+
+    .qty-selected {
+        margin: 0px, 0px;
+    }
+
+    .all-products-header {
+        font-size: 1rem;
+    }
+
+    .navbar-items {
+        font-size: medium;
+    }
+
+    .header {
+        margin-top: -30px;
+        height: 300px;
+    }
+
+    .header_title {
+        font-size: 1.8rem;
+        margin-top: -50px;
+    }
+
+    .header_description {
+        font-size: small;
+        width: 80%;
+        margin-top: 0px;
+    }
+
+    .all-products-header {
+        margin-top: 20px;
+    }
+
+}
+
+
+
+@media (min-width: 500px) and (max-width: 600px) {
+    
+    .img-logo {
+
+        width: 3.5rem;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .products-container {
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        gap: 10px;
+        margin-top: 0px;
+    }
+    .products{
+        height: 250px;
+    }
+
+    .qty-control-container {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .hair-price,
+    .hair-title {
+        margin: 6px;
+    }
+
+    .qty-btn {
+        padding: 16.25px;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .qty-title {
+        font-size: small;
+    }
+
+    .qty-increase-btn,
+    .qyt-decrease-btn{
+        text-align: center;
+        margin: 0px;
+    }
+
+    .qty-selected {
+        margin: 0px, 0px;
+    }
+
+    .all-products-header {
+        font-size: 1rem;
+    }
+
+    .navbar-items {
+        font-size: medium;
+    }
+
+    .header {
+        margin-top: -30px;
+        height: 300px;
+    }
+
+    .header_title {
+        font-size: 1.8rem;
+        margin-top: -50px;
+    }
+
+    .header_description {
+        font-size: small;
+        width: 80%;
+        margin-top: 0px;
+    }
+
+    .all-products-header {
+        margin-top: 20px;
+    }
+
+}
+
+
+@media (min-width: 600px) and (max-width: 700px) {
+    
+    .img-logo {
+
+        width: 3.5rem;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .products-container {
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        margin-top: 0px;
+    }
+    .products{
+        height: 280px;
+    }
+
+    .qty-control-container {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        flex: 1;
+
+    }
+
+    .hair-price,
+    .hair-title {
+        margin: 8px;
+    }
+
+    .qty-btn {
+        padding: 13.5px;
+        gap: 10px;
+    }
+
+    .qty-title {
+        font-size: small;
+        margin-right: 10px;
+    }
+
+    .qty-increase-btn,
+    .qyt-decrease-btn{
+        text-align: center;
+        padding: 3px 1px;
+        margin: 0px;
+    }
+
+    .qty-selected {
+        margin: 0px, 0px;
+    }
+
+    .all-products-header {
+        font-size: 1rem;
+    }
+
+    .navbar-items {
+        font-size: medium;
+    }
+
+    .header {
+        margin-top: -30px;
+        height: 300px;
+    }
+
+    .header_title {
+        font-size: 1.8rem;
+        margin-top: -50px;
+    }
+
+    .header_description {
+        font-size: small;
+        width: 80%;
+        margin-top: 0px;
+    }
+
+    .all-products-header {
+        margin-top: 20px;
+    }
+
+}
+
+
+
+@media (min-width: 700px) and (max-width: 800px) {
+    
+    .img-logo {
+
+        width: 3.5rem;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .products-container {
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: center;
+        gap: 10px;
+        margin-top: 0px;
+    }
+    .products{
+        height: 290px;
+    }
+
+    .qty-control-container {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .hair-price,
+    .hair-title {
+        margin: 8px;
+    }
+
+    .qty-btn {
+        padding: 15.5px;
+        justify-content: space-between;
+        gap: 5px;
+    }
+
+    .qty-title {
+        font-size: small;
+        margin-right: 5px;
+    }
+
+    .qty-increase-btn,
+    .qyt-decrease-btn{
+        text-align: center;
+        padding: 3px 1px;
+        margin: 0px;
+    }
+
+    .qty-selected {
+        margin: 0px, 0px;
+    }
+
+    .all-products-header {
+        font-size: 1rem;
+    }
+
+    .navbar-items {
+        font-size: medium;
+    }
+
+    .header {
+        margin-top: -30px;
+        height: 300px;
+    }
+
+    .header_title {
+        font-size: 1.8rem;
+        margin-top: -50px;
+    }
+
+    .header_description {
+        font-size: small;
+        width: 80%;
+        margin-top: 0px;
+    }
+
+    .all-products-header {
+        margin-top: 20px;
+    }
+
+}
+
+
+@media (min-width: 800px) and (max-width: 1000px) {
+    
+    .img-logo {
+
+        width: 3.5rem;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .products-container {
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: center;
+        gap: 10px;
+        margin-top: 0px;
+    }
+    .products{
+        height: 300px;
+    }
+
+    .qty-control-container {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .hair-price,
+    .hair-title {
+        margin: 8px;
+    }
+
+    .qty-btn {
+        padding: 17px;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .qty-title {
+        font-size: small;
+        margin-right: 5px;
+    }
+
+    .qty-increase-btn,
+    .qyt-decrease-btn{
+        text-align: center;
+        padding: 3px 1px;
+        margin: 0px;
+    }
+
+    .qty-selected {
+        margin: 0px, 0px;
+    }
+
+    .all-products-header {
+        font-size: 1rem;
+    }
+
+    .navbar-items {
+        font-size: medium;
+    }
+
+    .header {
+        margin-top: -30px;
+        height: 300px;
+    }
+
+    .header_title {
+        font-size: 1.8rem;
+        margin-top: -50px;
+    }
+
+    .header_description {
+        font-size: small;
+        width: 80%;
+        margin-top: 0px;
+    }
+
+    .all-products-header {
+        margin-top: 20px;
+    }
+
+}
+
+/* iPhone SE and small phones (max-width: 320px) */
+/* @media (max-width: 320px) {
+  body {
+    background: #fce4ec;
+  }
+} */
+
+/* iPhone 6/7/8/X/11 Pro (375px) */
+
+
+/* iPhone 12/13/14/Pro (390px) */
+/* @media (min-width: 385px) and (max-width: 393px) {
+  body {
+    background: #c8e6c9;
+  }
+} */
+
+/* iPhone 14 Pro Max/15 Pro Max (430px) */
+/* @media (min-width: 415px) and (max-width: 430px) {
+  body {
+    background: #d1c4e9;
+  }
+} */
+
+/* @media  (min-width: 701px) and (max-width: 1000px)  {
+    .products-container {
+        grid-template-columns: repeat(3, 1fr);
+    } */
+
+    /* .products {
+        width: auto;
+    }
+    
+}  */
