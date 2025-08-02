@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="{% static '../static/css/boostrap.min.css'%}">
     <link rel="stylesheet" href="{% static '../static/css/style.css' %}">
     {% block title %} {% endblock %}
+    {% block custom-style%} {% endblock %}
 </head>
 <body>
     <div class="logo-navbar-container">
         <a href="{% url 'home' %}"><img class="img-logo" src="{% static '../static/images/WhatsApp_Image_2025-06-05_at_9.54.01_AM-removebg-preview.webp' %}" alt="Logo"></a>
         <div class="navbar-container">
             
-            <a class="navbar-items" href="#"><i class="fa-solid fa-user" ></i></a>
-            <a class="navbar-items" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a class="navbar-items" href="#"><i class="fa-solid fa-right-to-bracket"></i></a>
+            <a href="#"><p class="navbar-items">cart</p></a>
+            <a href="{% url 'add-product' %}"><p class="navbar-items">add-product</p></a>
+            <a href="{% url 'register' %}"><p class="navbar-items">login</p></a>
             
         </div>
     </div>

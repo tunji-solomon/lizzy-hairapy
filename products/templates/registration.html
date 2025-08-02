@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} home-page {% endblock %}
+{% block custom-style%}
+    <style>
+        body {
+            background-image: url("{% static '../static/images/Happy-woman-holding-out-hair-1296x728-header-1296x728.webp'%}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.72);
+            background-blend-mode: overlay;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+    {% if context %}
+
+        <form method="POST" enctype="multipart/form-data" class="registration-form">
+            {% csrf_token %}
+            <h2 class="add-product-title">REGISTER</h2>
+
+            {% if messages %}
+            
+            {% for message in messages %}
+                    {% if "success" in message.tags %}
+                        <p class="messages success">{{message}}</p>
+                    {% elif "required" in messages %} 
+                        <p class="messages">{{message}}</p>
+                    {% endif%}     
+            <input type="text" placeholder="enter username" value={{context.username}}  name="username" class="registration-field" required>
+                    {% if 'username' in message.tags %}
+                        <p class="messages">{{message}}</p>
+                    {% endif %}
+            <input type="text" placeholder="enter email" value={{context.email}}  name="email" class="registration-field" required>
+                    {% if 'email' in message.tags %}
+                        <p class="messages">{{message}}</p>
+                    {% endif %}     
+            <input type="text" placeholder="enter password" name="password" class="registration-field"  required>
+                    {% if 'pattern' in message.tags %}
+                        <p class="messages">{{message}}</p>
+                    {% endif %}     
+            <input type="text" placeholder="confirm" name="confirm" class="registration-field" required>
+                    {% if 'mismatch' in message.tags %}
+                        <p class="messages">{{message}}</p>
+                    {% endif %}     
+            <button type="submit" class="registration-field submit-btn">Register</button>
+                {% endfor %}
+
+            {%endif %}
+
+        </form>
+    {% else %}
+        <form method="POST" enctype="multipart/form-data" class="registration-form">
+            <h2 class="add-product-title">REGISTER</h2>
+            
+            {% csrf_token %} 
+            <input type="text" placeholder="enter username" name="username" class="registration-field" required>
+            <input type="text" placeholder="enter email" name="email" class="registration-field" required>
+            <input type="text" placeholder="enter password" name="password" class="registration-field"  required>
+            <input type="text" placeholder="confirm" name="confirm" class="registration-field" required>
+            
+            <button type="submit" class="registration-field submit-btn">Register</button>
+            
+        </form>
+    {% endif %}
+    
+
+{% endblock %}

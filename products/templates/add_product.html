@@ -1,27 +1,37 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %} home-page {% endblock %}
+{% block custom-style%}
+    <style>
+        body {
+            background-image: url("{% static '../static/images/Happy-woman-holding-out-hair-1296x728-header-1296x728.webp'%}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.72);
+            background-blend-mode: overlay;
+        }
+    </style>
+{% endblock %}
 {% block content %}
 
-    <h2>ADD PRODUCT</h2>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" class="add-product-form">
+        <h2 class="add-product-title">ADD PRODUCT</h2>
+
         {% csrf_token %}
-        <input type="text" placeholder="product name" name="name" required>
-        <input type="text" placeholder="price" name="price" required>
-        <input type="text" placeholder="quantity" name="quantity" value="0" required>
-        <input type="text" placeholder="select" name="category" list="category" required>
-        <datalist id="category">
+        <input type="text" placeholder="product name" name="name" class="add-product-field" required>
+        <input type="text" placeholder="price" name="price" class="add-product-field" required>
+        <input type="text" placeholder="quantity" name="quantity" class="add-product-field"  required>
+        <input type="text" placeholder="select" name="category" list="category" class="add-product-field" required>
+        <datalist id="category" class="datalist">
             {% if categories %}
                 {% for category in categories%}
                     <option value="{{category}}">
                 {% endfor %}
             {% endif %}
         </datalist>
-        <input type="file" name="image" required>
-        <button type="submit">Add product</button>
+        <input type="file" name="image"  class="add-product-field upload" required>
+        <button type="submit" class="add-product-field submit-btn">Add product</button>
 
     </form>
-
-
 {% endblock %}

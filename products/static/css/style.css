@@ -10,6 +10,10 @@ body {
     position: relative;
 }
 
+a {
+    text-decoration: none;
+}
+
 .header {
     display: flex;
     flex-direction: column;
@@ -63,18 +67,30 @@ body {
 .navbar-container{
     padding: 20px;
     margin-left: auto;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
 
 }
 
 .navbar-items {
-    color: black;
-    font-size: 1.5rem;
-    margin-right: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    background-color: rgba(24, 24, 24, 0.807);
+    border-radius: 20px;
+    width: 100px;
+    padding: 8px;
+
 }
 
 .navbar-items:hover {
-    color: #ff14d0ac;
+    color: rgba(24, 24, 24, 0.809);
     transition: 0.5s;
+    background-color: white;
+    border: 0.5px solid;
 }
 
 .navbar-items:active {
@@ -99,7 +115,9 @@ body {
 
 .search-bar:focus,
 .filter-price:focus,
-.filter-category:focus {
+.filter-category:focus,
+.add-product-field:focus,
+.registration-form {
     outline: none;
 }
 
@@ -232,12 +250,60 @@ body {
 
 
 
-.add-to-cart {
+.add-to-cart{
     width: 100%;
     border-radius: 0px;
     height: 10.5%;
     background-color: rgb(165, 10, 10);
 }
+
+/* Add product section */
+.add-product-title {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.add-product-form,
+.registration-form {
+
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(1);
+    border: 0.5px solid ;
+    margin: 100px 200px;
+    align-items: center;
+    justify-items: center;
+    padding: 50px;
+    background-color: #f7f7f7;
+}
+
+.add-product-field,
+.registration-field {
+    width: 80%;
+    padding: 10px ;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0px 0px 1px 0.2px;
+}
+
+
+.upload {
+    box-shadow: none;
+}
+
+.submit-btn {
+    background-color:  rgb(165, 10, 10);
+    color: white;
+}
+
+.messages {
+    margin: 3px;
+    font-size: small;
+    color: red;
+    width: 80%;
+}
+.success {
+    color: green;
+}
+
 
 /* .products-container {
     margin: 30px;

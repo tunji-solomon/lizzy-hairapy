@@ -16,7 +16,7 @@
                 Illum non voluptates in odio. Ab rem,porro sequi delectus ea vel, incidunt sapiente autem,
                 inventore dolorem natus iusto.
         </p>
-            <form method="POST" class="search-bar-container">
+            <form method="GET" class="search-bar-container">
                 {% csrf_token %}
                 <input type="text" placeholder="Enter search" class="search-bar" name="search">
                 <button  type="submit"class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -29,10 +29,10 @@
                 Check out our products
             </h1>
             <div class="filter-container">
-                <form method="POST" class-"filter-form">
+                <form method="GET" class-"filter-form">
                     {% csrf_token %}
-                    <input type="radio" name="price" value=">" class="filter-radio">greater than
-                    <input type="radio" name="price" value="<" class="filter-radio">less than
+                    <input type="radio" name="price" value=">" class="filter-radio">above
+                    <input type="radio" name="price" value="<" class="filter-radio">below
                     <input type="text" name="price-field"placeholder="price" class="filter-price">
                     <input type="text" name="category"list="categories" placeholder="category" class="filter-category">
                     <datalist id="categories">
@@ -67,6 +67,23 @@
                     </div>
                 {% endfor %}
             </div>
+        {% else %}
+            <h1 class="all-products-header">
+                No product matches your search.....
+            </h1>
         {% endif %}
+
+        <div class="pagination">
+            {% if products.has_previous %}
+                <a href="?page={{ products.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span>Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
+
+            {% if products.has_next %}
+                <a href="?page={{ products.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+
     </section>
 {% endblock %}

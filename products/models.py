@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -21,3 +22,13 @@ class Products(models.Model):
     
     def __str__(self):
         return self.name
+    
+class Our_user(models.Model):
+    id = models.CharField(primary_key=True, default=uuid.uuid4, blank=False)
+    user = models.OneToOneField(User,blank=False, on_delete=models.CASCADE)
+    username = models.CharField(max_length=200, unique=True, blank=False)
+    email = models.EmailField(blank=False, unique=True)
+    password = models.CharField(blank=False)
+    
+    def __str__(self):
+        return self.username
