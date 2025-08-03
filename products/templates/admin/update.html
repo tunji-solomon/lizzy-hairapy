@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} home-page {% endblock %}
+{% block custom-style%}
+    <style>
+    </style>
+{% endblock %}
+{% block content %}
+    <h1 class="update-header">UPDATE PRODUCT</h1>
+    <form method="GET">
+        {% csrf_token %}
+        {% if products %}
+            <label class="update-product-search-label">Product name: </label>
+            <input class="update-search-field" type="text" name="search" list="product-search" required >
+            <datalist id="product-search">
+                {% for product in products %}
+                    <option value="{{product.name}}">
+                {% endfor %}
+            </datalist>
+            <button type="submit" class="update-submit-btn">find product</button>
+        {% endif %}
+        {% for message in messages %}
+            {% if "product" in message.tags or "server" in message.tags %}
+                <p class="messages error-update-search">{{message}}</p>
+            {% endif %}
+        {% endfor %}
+    </form>
+
+    {% if product %}
+        <form method="POST" enctype="multipart/form-data" class="update-form">
+            {% csrf_token %}
+            <input type="text" value="{{product.name}}" name="name" class="update-form-field">
+            <input type="text" value="{{product.price}}" name="price" class="update-form-field">
+            <input type="text" placeholder="quantity" name="quantity" class="update-form-field"  required>
+            <input type="text" value="{{product.category}}" name="category" list="category" class="update-form-field" >
+            <datalist id="category" class="datalist">
+                {% if categories %}
+                    {% for category in categories%}
+                        <option value="{{category}}">
+                    {% endfor %}
+                {% endif %}
+            </datalist>
+            <input type="file" name="image" class="update-form-field upload" >
+            <div class="btn-container">
+            <button type="submit" class="update-form-field submit-btn update-btn">Update</button>
+            <a href="{% url 'home'%}" class="update-form-field submit-btn cancel-btn"><div>Cancel</div></a>
+            </div>
+        </form>
+    {% else %}
+        <form method="POST" enctype="multipart/form-data" class="update-form">
+            {% csrf_token %}
+            <input type="text" placeholder="name" name="name" class="update-form-field" required>
+            <input type="text" placeholder="price" name="price" class="update-form-field" required>
+            <input type="text" placeholder="quantity" name="quantity" class="update-form-field"  required>
+            <input type="text" placeholder="category" name="category" list="category" class="update-form-field" required>
+            <datalist id="category" class="datalist">
+                {% if categories %}
+                    {% for category in categories%}
+                        <option value="{{category}}">
+                    {% endfor %}
+                {% endif %}
+            </datalist>
+            <input type="file" name="image" class="update-form-field upload" required>
+            <div class="btn-container">
+            <button type="submit" class="update-form-field submit-btn update-btn">Update</button>
+            <a href="{% url 'home'%}" class="update-form-field submit-btn cancel-btn">Cancel</a>
+            </div>
+        </form>
+    {% endif%}
+{% endblock %}

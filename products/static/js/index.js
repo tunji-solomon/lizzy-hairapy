@@ -11,3 +11,4 @@ function quantityBtn (option, id) {
         qty.value = value + 1
     }
 }
+

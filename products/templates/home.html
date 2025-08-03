@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} home-page {% endblock %}
+{% block title %}home-page{% endblock %}
 {% block content %}
     <style>
         header {
@@ -18,7 +18,7 @@
         </p>
             <form method="GET" class="search-bar-container">
                 {% csrf_token %}
-                <input type="text" placeholder="Enter search" class="search-bar" name="search">
+                <input type="text" placeholder="Enter product name" class="search-bar" name="search">
                 <button  type="submit"class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
         
@@ -43,6 +43,7 @@
                         {% endif %}
                     </datalist>
                     <button type="submit">find</button>
+                </form>
             </div>
         </div>
         {% if products %}
@@ -56,7 +57,6 @@
                         <h3 class="hair-title">{{product.name}}</h3>
                         <p class="hair-price">#{{product.price}}</p>
                         <div class="qty-btn">
-                            <p class="qty-title">Quantity </p>
                             <div class="qty-control-container">
                                 <button class="qyt-decrease-btn button" onclick="quantityBtn('decrease', '{{product.name}}')">-</button>
                                 <input type="text" value= "0" class="qty-selected" id="{{product.name}}">
@@ -75,13 +75,13 @@
 
         <div class="pagination">
             {% if products.has_previous %}
-                <a href="?page={{ products.previous_page_number }}">Previous</a>
+                <a href="?page={{ products.previous_page_number }} " class="pagination-control">Previous</a>
             {% endif %}
 
-            <span>Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
+            <span> {{ products.number }} of {{ products.paginator.num_pages }} </span>
 
             {% if products.has_next %}
-                <a href="?page={{ products.next_page_number }}">Next</a>
+                <a href="?page={{ products.next_page_number }}" class="pagination-control">Next</a>
             {% endif %}
         </div>
 

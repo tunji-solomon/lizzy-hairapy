@@ -86,7 +86,9 @@ a {
 
 }
 
-.navbar-items:hover {
+
+.navbar-items:hover,
+.cancel-btn:hover {
     color: rgba(24, 24, 24, 0.809);
     transition: 0.5s;
     background-color: white;
@@ -96,6 +98,11 @@ a {
 .navbar-items:active {
     color: #f9c0ede5;
     transition: 0.5s;
+}
+.active-user {
+    color: rgb(186, 50, 102);
+    background-color: #f7f7f7;
+    border: 0.2px solid rgb(186, 50, 102);
 }
 
 .search-bar-container {
@@ -117,7 +124,10 @@ a {
 .filter-price:focus,
 .filter-category:focus,
 .add-product-field:focus,
-.registration-form {
+.registration-field:focus,
+.login-field:focus,
+.update-form-field:focus,
+.update-search-field:focus{
     outline: none;
 }
 
@@ -194,18 +204,21 @@ a {
     display: none;
 }
 
+
 .qty-btn {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     padding: 19.5px;
     height: 5%;
+    text-align: center;
     align-items: center;
     border: 0.5px solid rgb(61, 60, 60);
     border-right: none;
     border-left: none;
 }
 
+.qty-control-container {
+    text-align: center;
+    align-content: center;
+}
 .qty-title {
     font-weight: bold;
     font-size: 0.8rem;
@@ -224,7 +237,7 @@ a {
     outline: none;
 }
 
-.button {
+.button{
     width: 40px;
     border: none;
     background-color: rgb(63, 62, 62);
@@ -243,7 +256,6 @@ a {
 .qyt-decrease-btn{
     border-bottom-right-radius: 0px;
     border-top-right-radius: 0px;
-    margin-left: 10px;
     width: 20%;
     cursor: pointer;
 }
@@ -254,15 +266,42 @@ a {
     width: 100%;
     border-radius: 0px;
     height: 10.5%;
-    background-color: rgb(165, 10, 10);
+    background-color: rgb(186, 50, 102);
+    transition: 0.6s ease;
 }
 
+.add-to-cart:hover,
+.submit-btn:hover,
+.reg-success-btn{
+    background-color: rgba(186, 50, 102, 0.86);;
+}
+
+.add-to-cart:active,
+.submit-btn:active,
+.reg-success-btn:active{
+    color:#f7f7f7;
+    background-color: rgba(186, 50, 102, 0.618);
+}
+
+.pagination {
+    margin-bottom: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.pagination-control {
+    color:rgb(186, 50, 102);
+}
+
+
 /* Add product section */
-.add-product-title {
+.add-product-title,
+.registration-form-title,
+.login-form-title{
     font-family: Arial, Helvetica, sans-serif;
 }
 .add-product-form,
-.registration-form {
+.registration-form,
+.login-form,
+.update-form {
 
     display: grid;
     gap: 10px;
@@ -276,7 +315,10 @@ a {
 }
 
 .add-product-field,
-.registration-field {
+.registration-field,
+.login-field,
+.update-form-field,
+.reg-success-btn {
     width: 80%;
     padding: 10px ;
     border-radius: 20px;
@@ -284,15 +326,43 @@ a {
     box-shadow: 0px 0px 1px 0.2px;
 }
 
+.login-form,
+.registration-form{
+    margin-top: 100px;
+    padding-bottom: 100px;
+    width:30%; 
+    margin-left:0px; 
+    margin-right:0px; 
+    border: none;
+}
+.login-container,
+.registration-container {
+    height:685px; 
+    display:flex;
+}
+
+.login-image,
+.registration-image {
+    width:70%; 
+    height:100%; 
+    background-size: contain; 
+    background-repeat:no-repeat; 
+    margin-bottom:0px; 
+    background-position: right center;
+
+}
 
 .upload {
     box-shadow: none;
 }
 
-.submit-btn {
-    background-color:  rgb(165, 10, 10);
+.submit-btn,
+.reg-success-btn {
+    background-color:  rgb(186, 50, 102);
     color: white;
+    transition: 0.6s ease-in-out ;
 }
+
 
 .messages {
     margin: 3px;
@@ -304,6 +374,113 @@ a {
     color: green;
 }
 
+.success-card-container {
+    width: 300px;
+    height: 300px;
+    margin-top: 100px;
+    align-content: center;
+    text-align: center;
+    justify-self: center;
+}
+
+.success-card {
+    width: 100%;
+    height: 100%;
+    background-size:cover;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    border: 1px solid rgb(186, 50, 102);
+
+}
+
+.reg-success-message {
+    color:#f7f7f7;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.reg-success-btn {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: none;
+}
+
+/* ADMIN */
+
+.admin-header,
+.update-header {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-top: 100px;
+}
+.admin-page-container {
+    margin-top: 50px;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 100px;
+
+}
+
+.admin-cards {
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    align-content: center;
+    border: 1px solid grey;
+    color: white;
+    font-size: bolder;
+    cursor: pointer;
+    transition: 0.65s ease-in-out;
+
+}
+
+.admin-cards:hover {
+    background-color: rgba(0, 0, 0, 0.32);
+}
+.admin-cards:active{
+    background-color: rgba(0, 0, 0, 0.225);
+
+}
+
+.update-header {
+    margin-top: 50px;
+}
+
+.update-product-search-label,
+.error-update-search {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 200px;
+    font-weight: lighter;
+}
+
+.update-form {
+    margin-top: 30px;
+}
+
+.btn-container{
+    width: 82%;
+    display: flex;
+    gap:10px;
+}
+
+.register-btn,
+.login-btn {
+    width: 85%;
+}
+
+.cancel-btn {
+    background-color: #f7f7f7;
+    color:  rgb(186, 50, 102);
+    text-align: center;
+    align-content: center;
+}
+
+.cancel-btn:hover {
+    background-color: #f7f7f7;
+}
 
 /* .products-container {
     margin: 30px;

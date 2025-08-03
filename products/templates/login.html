@@ -1,30 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} home-page {% endblock %}
+{% block title %}login-page{% endblock %}
 {% block custom-style%}
     <style>
-        body {
-            background-image: url("{% static '../static/images/Happy-woman-holding-out-hair-1296x728-header-1296x728.webp'%}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-color: rgba(0, 0, 0, 0.72);
-            background-blend-mode: overlay;
+        .login-image {
+             background-image: url({% static '../static/images/add-product.webp'%});
         }
+
     </style>
 {% endblock %}
 {% block content %}
-
-        <form method="POST" enctype="multipart/form-data" class="registration-form">
-            {% csrf_token %} 
-            <h2 class="add-product-title">LOGIN</h2>
-            {% if messages %}
-                {% for message in messages %}
-            <input type="text" placeholder="enter username" name="username" class="registration-field" required>
-            <input type="text" placeholder="enter password" name="password" class="registration-field"  required>
-                    {{message}}
-                {% endfor %}
-            {% endif %}
-            <button type="submit" class="registration-field submit-btn">Register</button> 
-        </form>
-    
+    <div class="login-container">
+            <form method="POST" enctype="multipart/form-data" class="login-form">
+                {% csrf_token %} 
+                <h2 class="login-form-title">LOGIN</h2>
+                <input type="text" placeholder="Enter username" name="username" class="login-field" required>
+                <input type="text" placeholder="Enter password" name="password" class="login-field"  required>
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="messages">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+                <button type="submit" class="login-field submit-btn login-btn">Login</button> 
+            </form>
+        <div class="login-image"></div>
+    </div>
+        
 {% endblock %}

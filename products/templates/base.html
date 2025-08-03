@@ -15,10 +15,17 @@
         <a href="{% url 'home' %}"><img class="img-logo" src="{% static '../static/images/WhatsApp_Image_2025-06-05_at_9.54.01_AM-removebg-preview.webp' %}" alt="Logo"></a>
         <div class="navbar-container">
             
-            <a href="#"><p class="navbar-items">cart</p></a>
-            <a href="{% url 'add-product' %}"><p class="navbar-items">add-product</p></a>
-            <a href="{% url 'register' %}"><p class="navbar-items">login</p></a>
-            
+            {% if user.is_authenticated %}
+            <a><li class="fa-solid fa-user  navbar-items active-user"></li></a>
+                {% if not user.is_superuser %}
+ 
+                    <a href="#"><p class="navbar-items">cart</p></a>
+                {% endif %}
+                <a href="{% url 'logout' %}"><p class="navbar-items">logout</p></a>
+            {% else %}
+            <a href="{% url 'sign-up' %}"><p class="navbar-items">Sign up</p></a>
+            <a href="{% url 'login' %}"><p class="navbar-items">login</p></a>
+            {% endif %}
         </div>
     </div>
     

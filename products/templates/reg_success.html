@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} registration-success {% endblock %}
+{% block custom-style%}
+    <style>
+        body {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.71);
+            background-blend-mode: overlay;
+        }
+        .success-card {
+            background-image:{% block success-image %} url({% static '../static/images/reg-success.webp'%}); {% endblock %}
+
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="success-card-container">
+        <div class="success-card"></div>
+        <h2 class="reg-success-message">{% block success-message %} Registration successful {% endblock %}</h2>
+        <a href="{% url 'home' %}"><button class="reg-success-btn">Back to home</button></a>
+    </div>
+
+{% endblock %}
