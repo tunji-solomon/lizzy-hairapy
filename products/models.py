@@ -32,3 +32,23 @@ class Our_user(models.Model):
     
     def __str__(self):
         return self.username
+    
+class Cart(models.Model):
+    user = models.OneToOneField(Our_user, related_name="user_cart", on_delete=models.CASCADE)
+    total_cost = models.FloatField(blank=False, default=0)
+    
+    def __str__(self):
+        return self.user
+    
+class CartItem(models.Model):
+    item = models.ForeignKey(Cart, related_name="cart_item", on_delete=models.CASCADE)
+    product_id = models.CharField(blank=False, max_length=200)
+    product_name = models.CharField(max_length=200, blank=False)
+    quantity = models.IntegerField(blank=False, default=0)
+    price = models.FloatField(blank=False)
+    
+    
+    def __str__(self):
+        return self.product_name
+    
+    

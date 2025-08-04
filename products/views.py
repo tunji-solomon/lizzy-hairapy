@@ -121,7 +121,10 @@ def sign_up(request):
                             new_user = Our_user(user=user,username=username,email=email,password=password)
                             new_user.clean_fields()
                             new_user.save()
-                            return render(request,"reg_success.html")
+                            user = authenticate(request, username=username, password=password)
+                            login(request, user)
+                            return redirect("home")
+                            
                         else:
                             messages.info(request, "Password does not match the required pattern", extra_tags= "pattern")
                             return render(request, "registration.html", {"context": context})
@@ -155,6 +158,7 @@ def login_user(request):
            else:
                messages.error(request, "Invalid credentials", extra_tags="wrong_credentials")
         return render(request,'login.html')
+    
     
 def logout_user(request):
     logout(request)
