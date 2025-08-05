@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}home-page{% endblock %}
+{% block cart_item_count %}
+    {% if cart_count %}
+        {{cart_count}}
+    {% endif %}
+{% endblock %}
 {% block content %}
+
     <style>
         header {
             background-image: url("{% static "../static/images/Happy-woman-holding-out-hair-1296x728-header-1296x728.webp"%}")
@@ -49,22 +55,28 @@
         {% if products %}
             <div class="products-container">
                 {% for product in products %}
+                <form method="POST" action="{% url 'add-to-cart' %}">
+                    {% csrf_token %}
                     <div class="products">
                         <div class="img-container">
                             <div class="img-alt"></div>
                             <img src="{{product.image_url}}" alt="Hair 1" class="hair-img">
+                            <input type="hidden" value="{{product.id}}" name="product_id">
                         </div>
                         <h3 class="hair-title">{{product.name}}</h3>
+                        <input type="hidden" value="{{product.name}}" name="product_name">
                         <p class="hair-price">#{{product.price}}</p>
+                        <input type="hidden" value="{{product.price}}" name="product_price">
                         <div class="qty-btn">
                             <div class="qty-control-container">
-                                <button class="qyt-decrease-btn button" onclick="quantityBtn('decrease', '{{product.name}}')">-</button>
-                                <input type="text" value= "0" class="qty-selected" id="{{product.name}}">
-                                <button class="qty-increase-btn button" onclick="quantityBtn('increase', '{{product.name}}')">+</button>
+                                <button type="button" class="qyt-decrease-btn button" onclick="quantityBtn('decrease', '{{product.name}}')">-</button>
+                                <input type="text" value= "0" class="qty-selected" id="{{product.name}}" name="product_quantity">
+                                <button type="button" class="qty-increase-btn button" onclick="quantityBtn('increase', '{{product.name}}')">+</button>
                             </div>
                         </div>
-                        <button class="add-to-cart button">Add to cart</button>
+                        <button type="submit" class="add-to-cart button">Add to cart</button>
                     </div>
+                </form>
                 {% endfor %}
             </div>
         {% else %}

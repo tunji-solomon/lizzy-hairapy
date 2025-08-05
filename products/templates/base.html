@@ -18,8 +18,11 @@
             {% if user.is_authenticated %}
             <a><li class="fa-solid fa-user  navbar-items active-user"></li></a>
                 {% if not user.is_superuser %}
- 
-                    <a href="#"><p class="navbar-items">cart</p></a>
+                    <div style="position: relative;">
+                    <a href="{% url 'view-cart' %}"><p class="navbar-items">cart</p></a>
+                    <div class="cart-counter">{% block cart_item_count %}0{% endblock %}</div>
+                    </div>
+
                 {% endif %}
                 <a href="{% url 'logout' %}"><p class="navbar-items">logout</p></a>
             {% else %}

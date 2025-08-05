@@ -38,7 +38,7 @@ class Cart(models.Model):
     total_cost = models.FloatField(blank=False, default=0)
     
     def __str__(self):
-        return self.user
+        return self.user.username
     
 class CartItem(models.Model):
     item = models.ForeignKey(Cart, related_name="cart_item", on_delete=models.CASCADE)

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load math_tags %}
+{% block title %}{% endblock %}
+{% block custom-style %} {% endblock %}
+{% block cart_item_count %}
+    {% if cart_count %}
+        {{cart_count}}
+    {% endif %}
+{% endblock%}
+
+{% block content %}
+
+    {% if cart %}
+        <h2 class="cart-header">CART ITEMS</h2>
+        <div class="cart-container">
+            <div class="cart-column-headers-container grid-4">
+                <p class="cart-column-headers">Name</p>
+                <p class="cart-column-headers">Price</p>
+                <p class="cart-column-headers">Quantity</p>
+                <p class="cart-column-headers">total</p>
+            </div>
+            {% for item in cart %}
+                <div class="cart-items-container grid-4">
+                    <div class="cart-items">
+                        {{item.product_name}}
+                    </div>
+                    <div class="cart-items" id="{{item.product_name}}P">
+                        {{item.price}}
+                    </div>
+                    <div class="cart-items quantity-container">
+                        <button class="cart-item-quantity-adjust-btn" onclick="totalCost('{{item.product_name}}P', '{{item.product_name}}Q', '{{item.product_name}}T', '-', 'item-total', 'cart-total' )">-</button>
+                        <p class="cart-item-quantity" id="{{item.product_name}}Q">{{item.quantity}}</p>
+                        <button class="cart-item-quantity-adjust-btn" onclick="totalCost('{{item.product_name}}P', '{{item.product_name}}Q', '{{item.product_name}}T', '+', 'item-total', 'cart-total' )">+</button>
+                    </div>
+                    <div class="cart-items item-total" id="{{item.product_name}}T">
+                        {% with total=item.price|multiply:item.quantity %}
+                            {{total}}
+                        {% endwith %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="total-cost-container grid-2">
+                <h3 class="cart-total-title">Total cost</h3>
+                <h3 class="cart-total" id="cart-total">{{cart_total}}</h3>
+            </div>
+            <div class="cart-button-container grid-2">
+                <a class="cart-button">Checkout</a>
+                <a class="cart-button">Clear cart</a>
+            </div>
+        </div>
+    {% else %}
+        {% for message in message %}
+        <h2></h2>
+        {% endfor %}
+    {% endif %}
+        
+    <div class="few-products-container grid-4">
+        <div class="few-products"></div>
+    </div>
+{% endblock %}

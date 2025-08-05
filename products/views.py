@@ -5,6 +5,7 @@ from django.contrib.auth import login,logout,authenticate
 from django.core.paginator import Paginator
 from django.contrib import messages
 import re
+import random
 
 
 # Create your views here.
@@ -52,13 +53,26 @@ def home(request, page=None):
                         all_product = Products.objects.filter(category__title = category)
                 saved_paginated_products = all_product
                 
+        if request.user.is_authenticated:
+            if request.user.is_authenticated:
+                user = Our_user.objects.get(username = request.user.username)
+                
+                cart_exist = Cart.objects.filter(user=user).first() 
+                try:
+                    global cart_count
+                    cart_count = len(cart_exist.cart_item.all()) 
+                except Exception:
+                    cart_count = None
+        else:
+            cart_count = None
                 
         paginated_product = Paginator(saved_paginated_products.order_by("price"), 20)
         product_pages = paginated_product.get_page(page)
         all_product = product_pages
         context = {
             "categories" : categories,
-            "products" : all_product
+            "products" : all_product,
+            "cart_count" : cart_count
         }
         
         
@@ -276,7 +290,81 @@ def create_admin(request):
             return render(request, "admin/registration.html", {"context": context})
     else:
         return render(request, "admin/registration.html")
-          
+    
+    
+def add_to_cart(request):
+    if request.method == "POST":
+        product_id = request.POST.get("product_id")
+        product_name = request.POST.get("product_name")
+        product_quantity = int(request.POST.get("product_quantity"))
+        product_price =float(request.POST.get("product_price"))
+
+        if product_quantity > 0:
+        
+            if request.user.is_authenticated:
+                user = Our_user.objects.get(username = request.user.username)
+                
+                cart_exist = Cart.objects.filter(user=user).first()
+                if cart_exist:
+                    for item in cart_exist.cart_item.all():
+                        print(item.product_id, "product_id:", product_id)
+                        if item.product_id == product_id:
+                            item.quantity += product_quantity
+                            item.save()
+                            break
+                    else:
+                        new_item = CartItem.objects.create(item=cart_exist, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price)
+                        new_item.save()
+                        
+                    cart_exist.total_cost += product_quantity * product_price
+                    cart_exist.save()
+            
+                    return redirect("home")
+        
+                else:
+                    total_cost = product_price * product_quantity
+                    new_cart = Cart.objects.create(user=user)
+                    new_cart.total_cost += total_cost
+                    new_cart.save()
+                    new_item = CartItem.objects.create(item=new_cart, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price)
+                    new_item.save()
+                    return redirect("home")
+                     
+            return redirect("sign-up")
+        
+        return redirect("home")
+    
+    return redirect("home")
+    
+def view_cart(request):
+    
+    if request.user.is_authenticated:
+        user = Our_user.objects.filter(user=request.user).first()
+        global user_cart
+        try:
+            user_cart = Cart.objects.get(user=user)
+        except Exception as e:
+            messages.info(request, "User Have not added any item to cart", extra_tags="empty-cart")
+        
+        products = Products.objects.all()
+        few_product = []
+        for _ in range(5):
+            few_product.append(products[random.randint(0, len(products)-1)])
+        cart =  user_cart.cart_item.all()
+        context = {
+            "cart":cart,
+            "cart_total": user_cart.total_cost,
+            "cart_count": len(cart),
+            "few_products": few_product
+        }            
+        return render(request, "cart.html", context)
+    else:
+        return redirect("home")
+        
+            
+        
+    
+            
             
             
         
