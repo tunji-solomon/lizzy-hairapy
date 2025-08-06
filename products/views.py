@@ -298,6 +298,7 @@ def add_to_cart(request):
         product_name = request.POST.get("product_name")
         product_quantity = int(request.POST.get("product_quantity"))
         product_price =float(request.POST.get("product_price"))
+        product_image = request.POST.get("product_image")
 
         if product_quantity > 0:
         
@@ -313,7 +314,7 @@ def add_to_cart(request):
                             item.save()
                             break
                     else:
-                        new_item = CartItem.objects.create(item=cart_exist, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price)
+                        new_item = CartItem.objects.create(item=cart_exist, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price, item_image=product_image)
                         new_item.save()
                         
                     cart_exist.total_cost += product_quantity * product_price
@@ -326,7 +327,7 @@ def add_to_cart(request):
                     new_cart = Cart.objects.create(user=user)
                     new_cart.total_cost += total_cost
                     new_cart.save()
-                    new_item = CartItem.objects.create(item=new_cart, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price)
+                    new_item = CartItem.objects.create(item=new_cart, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price, item_image=product_image)
                     new_item.save()
                     return redirect("home")
                      
@@ -348,7 +349,7 @@ def view_cart(request):
         
         products = Products.objects.all()
         few_product = []
-        for _ in range(5):
+        for _ in range(7):
             few_product.append(products[random.randint(0, len(products)-1)])
         cart =  user_cart.cart_item.all()
         context = {

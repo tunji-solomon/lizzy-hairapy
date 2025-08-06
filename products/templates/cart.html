@@ -5,22 +5,27 @@
 {% block cart_item_count %}
     {% if cart_count %}
         {{cart_count}}
+    {% else %}
+        {{0}}
     {% endif %}
 {% endblock%}
 
 {% block content %}
 
     {% if cart %}
-        <h2 class="cart-header">CART ITEMS</h2>
+        <h2 class="cart-header">CART DETAILS</h2>
         <div class="cart-container">
             <div class="cart-column-headers-container grid-4">
+                <p></p>
                 <p class="cart-column-headers">Name</p>
-                <p class="cart-column-headers">Price</p>
+                <p class="cart-column-headers">Price(₦)</p>
                 <p class="cart-column-headers">Quantity</p>
-                <p class="cart-column-headers">total</p>
+                <p class="cart-column-headers"></p>
+                <p class="cart-column-headers">total(₦)</p>
             </div>
             {% for item in cart %}
                 <div class="cart-items-container grid-4">
+                    <img src="{{item.item_image}}" alt="{{item.product_name}}" class="cart-items cart-product-img">
                     <div class="cart-items">
                         {{item.product_name}}
                     </div>
@@ -32,6 +37,7 @@
                         <p class="cart-item-quantity" id="{{item.product_name}}Q">{{item.quantity}}</p>
                         <button class="cart-item-quantity-adjust-btn" onclick="totalCost('{{item.product_name}}P', '{{item.product_name}}Q', '{{item.product_name}}T', '+', 'item-total', 'cart-total' )">+</button>
                     </div>
+                    <a href="#" class="cart-items remove-item">Remove</a>
                     <div class="cart-items item-total" id="{{item.product_name}}T">
                         {% with total=item.price|multiply:item.quantity %}
                             {{total}}
@@ -40,21 +46,35 @@
                 </div>
             {% endfor %}
             <div class="total-cost-container grid-2">
-                <h3 class="cart-total-title">Total cost</h3>
-                <h3 class="cart-total" id="cart-total">{{cart_total}}</h3>
+                <div class="total-hidden-column"></div>
+                <h3 class="cart-total-title">Total Cost</h3>
+                <div class="total-hidden-column"></div>
+                <div class="total-hidden-column"></div>
+                <div class="total-hidden-column"></div>
+                <div class="cart-total">
+                    <span class="naira-sign">₦ </span>
+                    <h3 id="cart-total">{{cart_total}}</h3>
+                </div>
             </div>
-            <div class="cart-button-container grid-2">
-                <a class="cart-button">Checkout</a>
-                <a class="cart-button">Clear cart</a>
-            </div>
+        </div>
+        <div class="cart-button-container grid-2">
+            <a class="cart-button">Checkout</a>
+            <a class="cart-button clear-cart">Clear cart</a>
         </div>
     {% else %}
         {% for message in message %}
-        <h2></h2>
+        <h2 class="cart-empty-message">{{message}}</h2>
         {% endfor %}
     {% endif %}
-        
+    <h2 class="related-product-header">Related products</h2>
     <div class="few-products-container grid-4">
-        <div class="few-products"></div>
+        {% for product in few_products %}
+            <div class="product-container-cart">
+                <img src="{{product.image_url}}" alt="{{product.name}} " class="product-image-cart">
+                <div class="product-name-cart">{{product.name}}</div>
+                <div class="product-price-cart">₦{{product.price}}</div>
+                <button class="btn-add-cart btn-submit">Add to cart</button>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

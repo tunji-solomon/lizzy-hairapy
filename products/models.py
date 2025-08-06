@@ -46,6 +46,7 @@ class CartItem(models.Model):
     product_name = models.CharField(max_length=200, blank=False)
     quantity = models.IntegerField(blank=False, default=0)
     price = models.FloatField(blank=False)
+    item_image = models.URLField(max_length=500, blank=True)
     
     
     def __str__(self):

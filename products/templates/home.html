@@ -61,11 +61,12 @@
                         <div class="img-container">
                             <div class="img-alt"></div>
                             <img src="{{product.image_url}}" alt="Hair 1" class="hair-img">
+                            <input type="hidden" value="{{product.image_url}}" name="product_image">
                             <input type="hidden" value="{{product.id}}" name="product_id">
                         </div>
                         <h3 class="hair-title">{{product.name}}</h3>
                         <input type="hidden" value="{{product.name}}" name="product_name">
-                        <p class="hair-price">#{{product.price}}</p>
+                        <p class="hair-price">₦{{product.price}}</p>
                         <input type="hidden" value="{{product.price}}" name="product_price">
                         <div class="qty-btn">
                             <div class="qty-control-container">
