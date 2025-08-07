@@ -299,6 +299,7 @@ def add_to_cart(request):
         product_quantity = int(request.POST.get("product_quantity"))
         product_price =float(request.POST.get("product_price"))
         product_image = request.POST.get("product_image")
+        product_total = round(product_price * product_quantity, 2)
 
         if product_quantity > 0:
         
@@ -308,13 +309,13 @@ def add_to_cart(request):
                 cart_exist = Cart.objects.filter(user=user).first()
                 if cart_exist:
                     for item in cart_exist.cart_item.all():
-                        print(item.product_id, "product_id:", product_id)
                         if item.product_id == product_id:
                             item.quantity += product_quantity
+                            item.total = product_total
                             item.save()
                             break
                     else:
-                        new_item = CartItem.objects.create(item=cart_exist, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price, item_image=product_image)
+                        new_item = CartItem.objects.create(item=cart_exist, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price,total=product_total, item_image=product_image)
                         new_item.save()
                         
                     cart_exist.total_cost += product_quantity * product_price
@@ -327,7 +328,7 @@ def add_to_cart(request):
                     new_cart = Cart.objects.create(user=user)
                     new_cart.total_cost += total_cost
                     new_cart.save()
-                    new_item = CartItem.objects.create(item=new_cart, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price, item_image=product_image)
+                    new_item = CartItem.objects.create(item=new_cart, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price,total=product_total, item_image=product_image)
                     new_item.save()
                     return redirect("home")
                      
@@ -337,30 +338,71 @@ def add_to_cart(request):
     
     return redirect("home")
     
-def view_cart(request):
+def view_cart(request, total_cost=None):
     
     if request.user.is_authenticated:
         user = Our_user.objects.filter(user=request.user).first()
         global user_cart
-        try:
-            user_cart = Cart.objects.get(user=user)
-        except Exception as e:
-            messages.info(request, "User Have not added any item to cart", extra_tags="empty-cart")
-        
         products = Products.objects.all()
         few_product = []
         for _ in range(7):
             few_product.append(products[random.randint(0, len(products)-1)])
+        try:
+            user_cart = Cart.objects.get(user=user)
+        except Exception as e:
+            messages.info(request, "User Have not added any item to cart", extra_tags="empty-cart")
+            return render (request, "cart.html", {"few_products": few_product})
+        
         cart =  user_cart.cart_item.all()
         context = {
             "cart":cart,
-            "cart_total": user_cart.total_cost,
+            "cart_total": total_cost if total_cost is not None else user_cart.total_cost,
             "cart_count": len(cart),
             "few_products": few_product
         }            
         return render(request, "cart.html", context)
     else:
         return redirect("home")
+    
+def remove_item(request, id):
+    user = Our_user.objects.get(user=request.user)
+    existing_cart = Cart.objects.get(user=user)
+    try:
+        global getItem
+        getItem = CartItem.objects.get(id=id)
+        existing_cart.total_cost -= float(getItem.total)
+        existing_cart.save()
+        getItem.delete()
+        return view_cart(request, existing_cart.total_cost)
+    except Exception:
+        return view_cart(request)
+
+    
+    
+        
+
+def checkout(request):
+    if request.method == "POST":
+        total_items_count = int(request.POST.get("total_item_count"))
+        for i in range(total_items_count):
+            item_name = request.POST.get(f"item-{i}-name")
+            item_price = float(request.POST.get(f"item-{i}-price"))
+            item_quantity = int(request.POST.get(f"item-{i}-quantity"))
+            item_cost = item_price * item_quantity
+            
+            user = Our_user.objects.get(user=request.user)
+            existing_cart = Cart.objects.get(user=user)
+            existing_cart_items = CartItem.objects.filter(item=existing_cart, product_name=item_name).first()
+            existing_cart_items.price = item_price
+            existing_cart_items.quantity = item_quantity
+            existing_cart_items.total = item_cost
+            existing_cart_items.save()
+            
+        cart_total_cost = request.POST.get("total-cost")
+        existing_cart.total_cost = cart_total_cost
+        existing_cart.save()
+    
+    return render(request, "checkout.html", {"amount_to_pay": cart_total_cost})
         
             
         

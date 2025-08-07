@@ -14,17 +14,25 @@
     <div class="logo-navbar-container">
         <a href="{% url 'home' %}"><img class="img-logo" src="{% static '../static/images/WhatsApp_Image_2025-06-05_at_9.54.01_AM-removebg-preview.webp' %}" alt="Logo"></a>
         <div class="navbar-container">
-            
+            <div class="navbar-items our-services">
+                Our Services
+                <div class="our-service-dropdown">
+                    <a class="link" href="#"><div class="our-service-list">Ventilating</div></a>
+                    <a class="link" href="#"><div class="our-service-list">Hair-Do</div></a>
+                    <a class="link" href="#"><div class="our-service-list">Revamping</div></a>
+                </div>
+            </div>
+
             {% if user.is_authenticated %}
-            <a><li class="fa-solid fa-user  navbar-items active-user"></li></a>
+                <a><li class="fa-solid fa-user  navbar-items active-user"></li></a>
+
                 {% if not user.is_superuser %}
                     <div style="position: relative;">
-                    <a href="{% url 'view-cart' %}"><p class="navbar-items">cart</p></a>
+                    <a href="{% url 'view-cart' %}"><p class="navbar-items"><i alt="cart" class="fa-solid fa-cart-shopping"></i></p></a>
                     <div class="cart-counter">{% block cart_item_count %}0{% endblock %}</div>
                     </div>
-
                 {% endif %}
-                <a href="{% url 'logout' %}"><p class="navbar-items">logout</p></a>
+                <a href="{% url 'logout' %}"><p class="navbar-items"><i class="fa-solid fa-arrow-right-from-bracket"></i></p></a>
             {% else %}
             <a href="{% url 'sign-up' %}"><p class="navbar-items">Sign up</p></a>
             <a href="{% url 'login' %}"><p class="navbar-items">login</p></a>

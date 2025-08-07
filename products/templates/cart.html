@@ -23,25 +23,34 @@
                 <p class="cart-column-headers"></p>
                 <p class="cart-column-headers">total(₦)</p>
             </div>
+            <form method="POST", action="{% url 'checkout' %}">
+                {% csrf_token %}
             {% for item in cart %}
                 <div class="cart-items-container grid-4">
                     <img src="{{item.item_image}}" alt="{{item.product_name}}" class="cart-items cart-product-img">
+                    <input type="hidden" name="item-{{forloop.counter0}}-image" value="{{item.item_image}}">
+
                     <div class="cart-items">
                         {{item.product_name}}
+                        <input type="hidden" name="item-{{forloop.counter0}}-name" value="{{item.product_name}}">
                     </div>
+
                     <div class="cart-items" id="{{item.product_name}}P">
                         {{item.price}}
+                        <input type="hidden" name="item-{{forloop.counter0}}-price" value="{{item.price}}">
                     </div>
                     <div class="cart-items quantity-container">
-                        <button class="cart-item-quantity-adjust-btn" onclick="totalCost('{{item.product_name}}P', '{{item.product_name}}Q', '{{item.product_name}}T', '-', 'item-total', 'cart-total' )">-</button>
+                        <button class="cart-item-quantity-adjust-btn" type="button" onclick="totalCost('{{item.product_name}}P', '{{item.product_name}}Q', '{{item.product_name}}T', '-', 'item-total', 'cart-total', 'item-{{forloop.counter0}}-quantity', 'total-cost')">-</button>
                         <p class="cart-item-quantity" id="{{item.product_name}}Q">{{item.quantity}}</p>
-                        <button class="cart-item-quantity-adjust-btn" onclick="totalCost('{{item.product_name}}P', '{{item.product_name}}Q', '{{item.product_name}}T', '+', 'item-total', 'cart-total' )">+</button>
+                        <input type="hidden" name="item-{{forloop.counter0}}-quantity" value="{{item.quantity}}" id="item-{{forloop.counter0}}-quantity">
+                        <button class="cart-item-quantity-adjust-btn" type="button" onclick="totalCost('{{item.product_name}}P', '{{item.product_name}}Q', '{{item.product_name}}T', '+', 'item-total', 'cart-total', 'item-{{forloop.counter0}}-quantity', 'total-cost')">+</button>
                     </div>
-                    <a href="#" class="cart-items remove-item">Remove</a>
+                    <a href="{% url 'remove-item' item.id %}" class="cart-items remove-item"><i alt="Remove" class="fa-solid fa-trash-can"></i></a>
                     <div class="cart-items item-total" id="{{item.product_name}}T">
                         {% with total=item.price|multiply:item.quantity %}
                             {{total}}
                         {% endwith %}
+                        <input type="hidden" name="item-{{forloop.counter0}}-item-cost">
                     </div>
                 </div>
             {% endfor %}
@@ -54,15 +63,18 @@
                 <div class="cart-total">
                     <span class="naira-sign">₦ </span>
                     <h3 id="cart-total">{{cart_total}}</h3>
+                    <input type="hidden" name="total-cost" id="total-cost" value="{{cart_total}}">
                 </div>
             </div>
         </div>
         <div class="cart-button-container grid-2">
-            <a class="cart-button">Checkout</a>
+            <button class="cart-button" href="{% url 'checkout' %}">Checkout</button>
+            <input type="hidden" name="total_item_count" value="{{cart|length}}">
+        </form>
             <a class="cart-button clear-cart">Clear cart</a>
         </div>
     {% else %}
-        {% for message in message %}
+        {% for message in messages %}
         <h2 class="cart-empty-message">{{message}}</h2>
         {% endfor %}
     {% endif %}
@@ -73,7 +85,7 @@
                 <img src="{{product.image_url}}" alt="{{product.name}} " class="product-image-cart">
                 <div class="product-name-cart">{{product.name}}</div>
                 <div class="product-price-cart">₦{{product.price}}</div>
-                <button class="btn-add-cart btn-submit">Add to cart</button>
+                <button class="btn-add-cart btn-submit"><i class="fa-solid fa-cart-plus"></i></button>
             </div>
         {% endfor %}
     </div>

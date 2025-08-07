@@ -46,10 +46,46 @@ class CartItem(models.Model):
     product_name = models.CharField(max_length=200, blank=False)
     quantity = models.IntegerField(blank=False, default=0)
     price = models.FloatField(blank=False)
+    total = models.DecimalField(blank=False,max_digits=10, decimal_places=2)
     item_image = models.URLField(max_length=500, blank=True)
     
     
     def __str__(self):
         return self.product_name
     
+class Order(models.Model):
+    user = models.ForeignKey(
+        Our_user,  
+        related_name="user_order",
+        on_delete=models.CASCADE
+    )
+    orderId = models.CharField(max_length=100, unique=True, blank=True)
+    total_cost = models.FloatField(blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def generate_order_id(self):
+        import random
+        characters = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        random_generated = ''.join(random.choices(characters, k=6))
+        username = self.user.username if self.user else "usr"
+        return f"{username[:3]}-{random_generated}"
+
+    def save(self, *args, **kwargs):
+        if not self.orderId:
+            self.orderId = self.generate_order_id()
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"Order {self.orderId} by {self.user.username}"
+    
+class Order_items(models.Model):
+    order = models.ForeignKey(Order, related_name="order_item", on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=200, blank=False)
+    item_quantity = models.IntegerField(blank=False)
+    item_price = models.FloatField(blank=False)
+    item_total_cost = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
+    
+    
+    def __str__(self):
+        return f"name:{self.item_name} quantity:{self.item_quantity} price:{self.item_price} total:{self.item_total_cost}"
     

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{% block custom-style %} {% endblock %}
+{% block content %}
+    <div>
+        <h1 class="checkout-header">PAYMENT DETAILS</h1>
+        <div class="payment-details">
+            <h3 class="field-title">ACCOUNT NAME:<span class="field-value">ESHO LYDIA ELIZABETH</span></h3>
+            <h3 class="field-title">ACCOUNT NUMBER:<span class="field-value">0227367316</span></h3>
+            <h3 class="field-title">BANK NAME:<span class="field-value">GTBANK</span></h3>
+        </div>
+        <h4>Amount to pay: <span class="amount_to_pay">₦{{amount_to_pay}}</span></h4>
+    </div>        
+{% endblock %}
