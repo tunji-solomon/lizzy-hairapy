@@ -2,14 +2,27 @@
 {% load humanize %}
 {% block title %} {% endblock %}
 {% block custom-style %} {% endblock %}
+{% block cart_item_count %}
+    {% if cart_count %}
+        {{cart_count}}
+    {% else %}
+        {{0}}
+    {% endif %}
+{% endblock%}
 {% block content %}
     <div>
-        <h1 class="checkout-header">PAYMENT DETAILS</h1>
         <div class="payment-details">
-            <h3 class="field-title">ACCOUNT NAME:<span class="field-value">ESHO LYDIA ELIZABETH</span></h3>
-            <h3 class="field-title">ACCOUNT NUMBER:<span class="field-value">0227367316</span></h3>
-            <h3 class="field-title">BANK NAME:<span class="field-value">GTBANK</span></h3>
+            <div class="payment-details-title">
+                <h3 class="field-title">ACCOUNT NAME:</h3>
+                <h3 class="field-title">ACCOUNT NOS.:</h3>
+                <h3 class="field-title">BANK NAME:</h3>
+            </div>
+            <div class="payment-details-value">
+                <p class="field-value">ESHO LYDIA ELIZABETH</p>
+                <p class="field-value">0227367316</p>
+                <p class="field-value">GTBANK</p>
+            </div>
         </div>
-        <h4>Amount to pay: <span class="amount_to_pay">₦{{amount_to_pay|intcomma}}</span></h4>
+        <h4>Amount to pay: <span class="amount_to_pay">₦{{amount_to_pay|floatformat:2|intcomma}}</span></h4>
     </div>        
 {% endblock %}

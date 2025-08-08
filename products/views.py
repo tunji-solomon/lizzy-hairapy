@@ -342,24 +342,32 @@ def view_cart(request, total_cost=None):
     
     if request.user.is_authenticated:
         global user_cart
+        global existing_cart
+        global item_name
+        global related_product
+        related_product = Products.objects.all()
         user = Our_user.objects.filter(user=request.user).first()
-        existing_cart = Cart.objects.get(user=user)
-        existing_cart = existing_cart.cart_item.all()
-        item_name = [item.product_name for item in existing_cart ]
-        products = Products.objects.all()
-        few_product = [product for product in products if not product.name in item_name ]
         try:
             user_cart = Cart.objects.get(user=user)
+            existing_cart = user_cart.cart_item.all()
+            if len(existing_cart) < 1:
+                messages.info(request, "Cart is empty. Check out our products to add some.", extra_tags="empty-cart")
+                return render(request, "cart.html", {"related_products": related_product})
+            item_name = [item.product_name for item in existing_cart ]
         except Exception as e:
             messages.info(request, "User Have not added any item to cart", extra_tags="empty-cart")
-            return render (request, "cart.html", {"few_products": few_product})
-        
-        cart =  user_cart.cart_item.all()
+            return render (request, "cart.html", {"related_products": related_product})
+        products = Products.objects.all()
+        if item_name:
+            related_product = [product for product in products if not product.name in item_name ]
+        else:
+            related_product = [product for product in products] 
+        # cart =  user_cart.cart_item.all()
         context = {
-            "cart":cart,
+            "cart":existing_cart,
             "cart_total": total_cost if total_cost is not None else user_cart.total_cost,
-            "cart_count": len(cart),
-            "few_products": few_product
+            "cart_count": len(existing_cart),
+            "related_products": related_product
         }            
         return render(request, "cart.html", context)
     else:
@@ -372,16 +380,18 @@ def remove_item(request, id):
         global getItem
         getItem = CartItem.objects.get(id=id)
         existing_cart.total_cost -= float(getItem.total)
-        existing_cart.save()
         getItem.delete()
+        existing_cart.save()
         return view_cart(request, existing_cart.total_cost)
     except Exception:
         return view_cart(request)
-
     
+def delete_cart(request):
+    user = Our_user.objects.get(user=request.user)
+    cart = Cart.objects.get(user=user)
+    cart.delete()
+    return view_cart(request)
     
-        
-
 def checkout(request):
     if request.method == "POST":
         total_items_count = int(request.POST.get("total_item_count"))
@@ -402,8 +412,13 @@ def checkout(request):
         cart_total_cost = request.POST.get("total-cost")
         existing_cart.total_cost = cart_total_cost
         existing_cart.save()
+        context = {
+            "amount_to_pay": cart_total_cost,
+            "cart_count": total_items_count
+            
+        }
     
-    return render(request, "checkout.html", {"amount_to_pay": cart_total_cost})
+    return render(request, "checkout.html", context)
         
             
         

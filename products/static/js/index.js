@@ -50,33 +50,33 @@ function totalCost (price, quantity, total, action, getItemTotal, getCartTotal, 
 }
 
 function formatPrice(value) {
-    value = String(value)
-    if (value.length == 4) {
-        value = value[0] + ',' + value.slice(1)
-    }else{
-        if (value.length == 5) {
-            value = value.slice(0,2) + "," + value.slice(2)
-        }else{
-            if (value.length == 6 ){
-            value = value.slice(0,3) + "," + value.slice(3)
-            }else {
-                if (value.length == 7){
-                    value = value[0] + ',' + value.slice(1, 4) + ',' + value.slice(4)
-                }else {
-                    if (value.length == 8){
-                        value = value.slice(0,2) + ',' + value.slice(2, 5) + ',' + value.slice(5)
+    // value = String(value)
+    // if (value.length == 4) {
+    //     value = value[0] + ',' + value.slice(1)
+    // }else{
+    //     if (value.length == 5) {
+    //         value = value.slice(0,2) + "," + value.slice(2)
+    //     }else{
+    //         if (value.length == 6 ){
+    //         value = value.slice(0,3) + "," + value.slice(3)
+    //         }else {
+    //             if (value.length == 7){
+    //                 value = value[0] + ',' + value.slice(1, 4) + ',' + value.slice(4)
+    //             }else {
+    //                 if (value.length == 8){
+    //                     value = value.slice(0,2) + ',' + value.slice(2, 5) + ',' + value.slice(5)
 
-                    }else {
-                        if (value.length == 9){
-                                    value = value.slice(0,3) + ',' + value.slice(3, 6) + ',' + value.slice(6)
-                        }
-                    }                      
-                }
-            }
-        }
+    //                 }else {
+    //                     if (value.length == 9){
+    //                                 value = value.slice(0,3) + ',' + value.slice(3, 6) + ',' + value.slice(6)
+    //                     }
+    //                 }                      
+    //             }
+    //         }
+    //     }
         
-    }
-    return value
+    // }
+    return Number(value.toString().replace(/,/g, "")).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 
@@ -109,6 +109,35 @@ items.forEach((item) => {
     hiddenServices.classList.remove("our-services-visible");
   });
 });
+
+
+function confirmAction(container, action){
+    const modalContainer = document.querySelector(`.${container}`);
+    if (action != "cancel"){
+        modalContainer.classList.add("modal-visible")
+    }else{
+        modalContainer.classList.remove("modal-visible")
+    }
+    
+
+
+    // ourService.addEventListener("mouseover", myHandler);
+    // ourService.addEventListener("click", myHandler);
+    // ourService.addEventListener("mouseout", myHandler);
+
+    // function myHandler(e) {
+    //     if(["mouseover"].includes(e.type)){
+    //         e.stopPropagation()
+    //         hiddenServices.classList.add("our-services-visible");
+    
+    //     }else if(e.type == "click"){
+    //         hiddenServices.classList.remove("our-services-visible")
+    //     }
+    //     else{
+    //         hiddenServices.classList.remove("our-services-visible");
+    //     }
+    // }
+}
 
 
 

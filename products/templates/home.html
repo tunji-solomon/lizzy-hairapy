@@ -69,7 +69,7 @@
                         </div>
                         <h3 class="hair-title">{{product.name}}</h3>
                         <input type="hidden" value="{{product.name}}" name="product_name">
-                        <p class="hair-price">₦{{product.price|floatformat:0|intcomma}}</p>
+                        <p class="hair-price">₦{{product.price|floatformat:2|intcomma}}</p>
                         <input type="hidden" value="{{product.price}}" name="product_price">
                         <div class="qty-btn">
                             <div class="qty-control-container">
