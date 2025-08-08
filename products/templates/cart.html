@@ -12,7 +12,7 @@
 {% endblock%}
 
 {% block content %}
-
+    {% block page-specific-content %}
     {% if cart %}
         <h2 class="cart-header">CART DETAILS</h2>
         <div class="cart-container">
@@ -84,6 +84,7 @@
         <h2 class="cart-empty-message">{{message}}</h2>
         {% endfor %}
     {% endif %}
+    {% endblock %}
     <h2 class="related-product-header">Related products</h2>
     <div class="few-products-container grid-4">
         {% for product in related_products %}

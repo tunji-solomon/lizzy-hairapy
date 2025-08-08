@@ -412,9 +412,12 @@ def checkout(request):
         cart_total_cost = request.POST.get("total-cost")
         existing_cart.total_cost = cart_total_cost
         existing_cart.save()
+        related_product = Products.objects.all()
+
         context = {
             "amount_to_pay": cart_total_cost,
-            "cart_count": total_items_count
+            "cart_count": total_items_count,
+            "related_products": related_product
             
         }
     

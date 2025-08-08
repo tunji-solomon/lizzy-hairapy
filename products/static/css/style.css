@@ -102,7 +102,6 @@ a {
 
 .our-services {
     position: relative;
-    width: fit-content;
     border: none;
     cursor: pointer;
 }
@@ -336,8 +335,9 @@ a {
 .reg-success-btn,
 .btn-add-cart:hover,
 .remove-item:hover,
-.cart-button:hover{
-    background-color: rgba(186, 50, 102, 0.86);;
+.cart-button:hover,
+.payment-completed:hover{
+    background-color: rgba(186, 50, 102, 0.86);
 }
 
 .add-to-cart:active,
@@ -345,7 +345,8 @@ a {
 .reg-success-btn:active,
 .btn-add-cart:active,
 .remove-item:active,
-.cart-button:active {
+.cart-button:active,
+.payment-completed:active {
     color:#f7f7f7;
     background-color: rgba(186, 50, 102, 0.618);
 }
@@ -811,6 +812,12 @@ a {
     background-color:rgb(63, 62, 62);
     border: none;
 }
+.checkout-container {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(0, 0, 0, 0.794);
+    margin-left: 50px;
+
+}
 
 .payment-details {
     display: flex;
@@ -818,6 +825,10 @@ a {
     width: 500px;
     padding: 50px;
     align-items: center;
+    color: #f7f7f7;
+    margin-left: 0px;
+    background-color: rgba(0, 0, 0, 0.494);
+
 }
 
 .payment-details-title,
@@ -826,12 +837,40 @@ a {
 
 }
 .payment-details-value {
-    display: grid;
     font-weight: lighter;
-    font-family: Arial, Helvetica, sans-serif;
     font-size: medium;
-    height: fit-content;
+    margin-left: 20px
+
 }
+
+.amount-to-pay{
+    font-weight: lighter;
+    margin-top: 10px;
+}
+
+.payment-note {
+    color: rgb(186, 50, 102);
+    font-weight: lighter;
+    margin-bottom: 20px;
+    font-size: smaller;
+}
+
+.payment-proof {
+    margin-left: 20px;
+}
+
+.payment-completed {
+    display: block;
+    background-color:  rgb(186, 50, 102);
+    color: #f7f7f7;
+    border-radius: 20px;
+    margin-top: 50px;
+    padding: 13px 50px;
+    border: none;
+    cursor: pointer;
+    transition: 0.65s ease-in-out;
+}
+
 
 /* .products-container {
     margin: 30px;
