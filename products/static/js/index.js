@@ -13,13 +13,14 @@ function quantityBtn (option, id) {
 }
 
 function totalCost (price, quantity, total, action, getItemTotal, getCartTotal, inputValue, cartTotalValue) {
-    const getPrice = document.getElementById(`${price}`);
+    let getPrice = document.getElementById(`${price}`);
     const getQuantity = document.getElementById(`${quantity}`);
     const getTotal = document.getElementById(`${total}`);
     const getInputValue = document.getElementById(`${inputValue}`);
     const getCarttValue = document.getElementById(`${cartTotalValue}`);
 
-
+    getPrice = getPrice.innerText.replace(",","")
+    console.log(getPrice)
     let cartTotal = 0
     if (Number(getQuantity.innerText) >= 1){
         if (action == "-" && Number(getQuantity.innerText) > 1){
@@ -29,70 +30,55 @@ function totalCost (price, quantity, total, action, getItemTotal, getCartTotal, 
             getQuantity.innerText = Number(getQuantity.innerText) + 1
          }
 
-        const new_price = Number(getPrice.innerText)
+        const new_price = Number(getPrice)
         const new_quantity = Number(getQuantity.innerText)
-        getTotal.innerText = new_price * new_quantity
+        getTotal.innerText = formatPrice(new_price * new_quantity)
+
         getInputValue.value = new_quantity
-        console.log("GET QUANTITY", getInputValue)
     }
 
 
     const totalList = document.querySelectorAll(`.${getItemTotal}`)
     totalList.forEach((total) => {
-        cartTotal += Number(total.innerText)
+        cartTotal += Number(total.innerText.replace(/,/g, ""))
     })
     const setCartTotal = document.getElementById(`${getCartTotal}`) 
-    setCartTotal.innerText = cartTotal
+    setCartTotal.innerText = formatPrice(cartTotal)
     getCarttValue.value = cartTotal
-    console.log("GET INPUT TOTAL", getCarttValue.value)
 
 
 }
 
+function formatPrice(value) {
+    value = String(value)
+    if (value.length == 4) {
+        value = value[0] + ',' + value.slice(1)
+    }else{
+        if (value.length == 5) {
+            value = value.slice(0,2) + "," + value.slice(2)
+        }else{
+            if (value.length == 6 ){
+            value = value.slice(0,3) + "," + value.slice(3)
+            }else {
+                if (value.length == 7){
+                    value = value[0] + ',' + value.slice(1, 4) + ',' + value.slice(4)
+                }else {
+                    if (value.length == 8){
+                        value = value.slice(0,2) + ',' + value.slice(2, 5) + ',' + value.slice(5)
 
+                    }else {
+                        if (value.length == 9){
+                                    value = value.slice(0,3) + ',' + value.slice(3, 6) + ',' + value.slice(6)
+                        }
+                    }                      
+                }
+            }
+        }
+        
+    }
+    return value
+}
 
-
-// let ourService = document.querySelector(".our-services")
-// let hiddenServices = document.querySelectorAll(".our-service-hidden")
-// let container = document.querySelector(".hide-our-service")
-
-// ourService.addEventListener("mouseover", ()=> {
-
-//         hiddenServices.forEach((elem) => {
-//             elem.classList.add("our-services-visible")
-//         })
-
-//         container.classList.add("display-our-service")
-//         console.log("Add class")
-
-// })
-
-// ourService.addEventListener("mouseout", ()=> {
-
-//         hiddenServices.forEach((elem) => {
-//             elem.classList.remove("our-services-visible")
-//         })
-//         container.classList.remove("display-our-service")
-
-//         console.log("Remove class")
-// })
-
-//   window.addEventListener("load", () => {
-//     const fontAwesomeElement = document.createElement("i");
-//     fontAwesomeElement.className = "fa fa-solid";
-//     document.body.appendChild(fontAwesomeElement);
-//     const style = window.getComputedStyle(fontAwesomeElement, "::before").content;
-//     document.body.removeChild(fontAwesomeElement);
-
-//     if (!style || style === "none" || style === '""') {
-//       document.querySelectorAll(".fa").forEach(el => {
-//         el.textContent = el.getAttribute("alt") || "Icon";
-//       });
-//     }
-//   });
-
-
-// document.getElementById("copyright").innerHTML = <i class="fa-solid fa-copyright">lizzy-hairapy</i> + ` ${Date.now()}`;
 
 
 const ourService = document.querySelector(".our-services");
@@ -116,13 +102,7 @@ function myHandler(e) {
 }
 
 
-// Hide dropdown if user clicks outside
-// document.addEventListener("click", () => {
-  
-//   }
-// });
-
-// Optional: Hide when user clicks a dropdown item
+// Hide when user clicks a dropdown item
 const items = document.querySelectorAll(".our-service-dropdown div");
 items.forEach((item) => {
   item.addEventListener("click", () => {

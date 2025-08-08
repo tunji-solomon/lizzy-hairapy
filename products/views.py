@@ -341,12 +341,13 @@ def add_to_cart(request):
 def view_cart(request, total_cost=None):
     
     if request.user.is_authenticated:
-        user = Our_user.objects.filter(user=request.user).first()
         global user_cart
+        user = Our_user.objects.filter(user=request.user).first()
+        existing_cart = Cart.objects.get(user=user)
+        existing_cart = existing_cart.cart_item.all()
+        item_name = [item.product_name for item in existing_cart ]
         products = Products.objects.all()
-        few_product = []
-        for _ in range(7):
-            few_product.append(products[random.randint(0, len(products)-1)])
+        few_product = [product for product in products if not product.name in item_name ]
         try:
             user_cart = Cart.objects.get(user=user)
         except Exception as e:

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load math_tags %}
 {% block title %}{% endblock %}
 {% block custom-style %} {% endblock %}
@@ -36,7 +37,7 @@
                     </div>
 
                     <div class="cart-items" id="{{item.product_name}}P">
-                        {{item.price}}
+                        {{item.price|floatformat:0|intcomma}}
                         <input type="hidden" name="item-{{forloop.counter0}}-price" value="{{item.price}}">
                     </div>
                     <div class="cart-items quantity-container">
@@ -48,7 +49,7 @@
                     <a href="{% url 'remove-item' item.id %}" class="cart-items remove-item"><i alt="Remove" class="fa-solid fa-trash-can"></i></a>
                     <div class="cart-items item-total" id="{{item.product_name}}T">
                         {% with total=item.price|multiply:item.quantity %}
-                            {{total}}
+                            {{total|floatformat:2|intcomma}}
                         {% endwith %}
                         <input type="hidden" name="item-{{forloop.counter0}}-item-cost">
                     </div>
@@ -62,7 +63,7 @@
                 <div class="total-hidden-column"></div>
                 <div class="cart-total">
                     <span class="naira-sign">₦ </span>
-                    <h3 id="cart-total">{{cart_total}}</h3>
+                    <h3 id="cart-total">{{cart_total|floatformat:2|intcomma}}</h3>
                     <input type="hidden" name="total-cost" id="total-cost" value="{{cart_total}}">
                 </div>
             </div>
@@ -81,12 +82,12 @@
     <h2 class="related-product-header">Related products</h2>
     <div class="few-products-container grid-4">
         {% for product in few_products %}
-            <div class="product-container-cart">
+            <a href="#" class="product-container-cart">
                 <img src="{{product.image_url}}" alt="{{product.name}} " class="product-image-cart">
                 <div class="product-name-cart">{{product.name}}</div>
-                <div class="product-price-cart">₦{{product.price}}</div>
+                <div class="product-price-cart">₦{{product.price|intcomma}}</div>
                 <button class="btn-add-cart btn-submit"><i class="fa-solid fa-cart-plus"></i></button>
-            </div>
+            </a>
         {% endfor %}
     </div>
 {% endblock %}
