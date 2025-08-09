@@ -577,7 +577,8 @@ a {
 
 }
 
-.modal-confirmation {
+.modal-confirmation,
+.modal-confirmation-cart{
     display: none;
 }
 
@@ -598,7 +599,8 @@ a {
 
 }
 
-.confirmation-question {
+.confirmation-question,
+.confirmation-question-cart {
     font-family: Arial, Helvetica, sans-serif;
     font-size: medium;
     font-weight: lighter;
@@ -607,7 +609,8 @@ a {
 
 
 
-.confirmation {
+.confirmation,
+.confirmation-cart {
     padding: 10px;
     text-decoration: none;
     background-color: black;
@@ -624,7 +627,8 @@ a {
 }
 
 
-.confirmation:hover{
+.confirmation:hover,
+.confirmation-cart:hover{
     background-color: rgba(0,0,0,0.6);
 }
 
@@ -745,9 +749,10 @@ a {
     margin-top: 100px;
 }
 
+
 .few-products-container {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(20, 1fr);
     margin: 50px;
     padding: 30px;
     border: 0.3px solid rgba(0, 0, 0, 0.225);
@@ -765,6 +770,7 @@ a {
 }
 
 .product-container-cart {
+    border: 2px solid;
     width: 200px;
     height: 200px;
     border-radius: 20px;

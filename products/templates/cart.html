@@ -77,7 +77,12 @@
             <button class="cart-button" href="{% url 'checkout' %}">Checkout</button>
             <input type="hidden" name="total_item_count" value="{{cart|length}}">
         </form>
-            <a href="{% url 'delete-cart' %}" class="cart-button clear-cart">Clear cart</a>
+            <button class="cart-button clear-cart" onclick="confirmAction('modal-confirmation-cart', 'confirm')">Clear cart</button>
+            <div class="modal-confirmation-cart">
+                <p class="confirmation-question-cart">Want to clear cart?</p>
+                <a href="{% url 'delete-cart' %}" class="confirmation-cart confirm-delete">Yes</a>
+                <button class="confirmation-cart cancel-delete" onclick="confirmAction('modal-confirmation-cart', 'cancel')" type="button">No</button>
+            </div>
         </div>
     {% else %}
         {% for message in messages %}
@@ -88,12 +93,20 @@
     <h2 class="related-product-header">Related products</h2>
     <div class="few-products-container grid-4">
         {% for product in related_products %}
-            <a href="#" class="product-container-cart">
-                <img src="{{product.image_url}}" alt="{{product.name}} " class="product-image-cart">
-                <div class="product-name-cart">{{product.name}}</div>
-                <div class="product-price-cart">₦{{product.price|intcomma}}</div>
-                <button class="btn-add-cart btn-submit"><i class="fa-solid fa-cart-plus"></i></button>
-            </a>
+            <div class="product-container-cart">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'add-to-cart' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{product.id}}" type="hidden">
+                    <img src="{{product.image_url}}" alt="{{product.product_name}} " class="product-image-cart">
+                    <input type="hidden" name="product_image" value="{{product.image_url}}" type="hidden">
+                    <div class="product-name-cart">{{product.name}}</div>
+                    <input type="hidden" name="product_name" value="{{product.name}}" type="hidden">
+                    <div class="product-price-cart">₦{{product.price|intcomma}}</div>
+                    <input type="hidden" name="product_price" value="{{product.price}}" type="hidden">
+                    <input type="hidden" name="product_quantity" value="1" type="hidden">
+                    <button class="btn-add-cart btn-submit" type="submit"><i class="fa-solid fa-cart-plus"></i></button>
+                </form>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}

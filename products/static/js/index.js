@@ -113,6 +113,7 @@ items.forEach((item) => {
 
 function confirmAction(container, action){
     const modalContainer = document.querySelector(`.${container}`);
+
     if (action != "cancel"){
         modalContainer.classList.add("modal-visible")
     }else{
