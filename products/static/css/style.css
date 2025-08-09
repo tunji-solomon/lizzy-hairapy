@@ -846,12 +846,12 @@ a {
 .amount-to-pay{
     font-weight: lighter;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .payment-note {
     color: rgb(186, 50, 102);
     font-weight: lighter;
-    margin-bottom: 20px;
     font-size: smaller;
 }
 
@@ -869,6 +869,11 @@ a {
     border: none;
     cursor: pointer;
     transition: 0.65s ease-in-out;
+}
+
+.checkout-image {
+    background-color: red;
+    height: 100%;
 }
 
 

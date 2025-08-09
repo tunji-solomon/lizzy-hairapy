@@ -53,7 +53,7 @@ class CartItem(models.Model):
     def __str__(self):
         return self.product_name
     
-class Order(models.Model):
+class Pending_Order(models.Model):
     user = models.ForeignKey(
         Our_user,  
         related_name="user_order",
@@ -61,6 +61,8 @@ class Order(models.Model):
     )
     orderId = models.CharField(max_length=100, unique=True, blank=True)
     total_cost = models.FloatField(blank=False)
+    proof_of_payment = models.URLField(max_length=500, blank=False)
+    public_id = models.CharField(max_length=200, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def generate_order_id(self):
@@ -78,8 +80,8 @@ class Order(models.Model):
     def __str__(self):
         return f"Order {self.orderId} by {self.user.username}"
     
-class Order_items(models.Model):
-    order = models.ForeignKey(Order, related_name="order_item", on_delete=models.CASCADE)
+class Pending_order_items(models.Model):
+    order = models.ForeignKey(Pending_Order, related_name="pending_order_item", on_delete=models.CASCADE)
     item_name = models.CharField(max_length=200, blank=False)
     item_quantity = models.IntegerField(blank=False)
     item_price = models.FloatField(blank=False)
@@ -87,5 +89,5 @@ class Order_items(models.Model):
     
     
     def __str__(self):
-        return f"name:{self.item_name} quantity:{self.item_quantity} price:{self.item_price} total:{self.item_total_cost}"
+        return f"name:{self.item_name} with quantity of {self.item_quantity} at price of {self.item_price} each by {self.order.user}. --> total:{self.item_total_cost}"
     

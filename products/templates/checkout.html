@@ -1,8 +1,20 @@
 {% extends 'cart.html' %}
+{% load static %}
 {% load humanize %}
 {% block title %} {% endblock %}
-{% block custom-style %} {% endblock %}
+{% block custom-style %}
+    <style>
+        .checkout-image {
+            background-image: url({% static '../static/images/WhatsApp_Image_2025-06-05_at_9.54.01_AM-removebg-preview.webp'%});
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.71);
+            background-blend-mode: overlay;
+        }
+
+    </style>
+{% endblock %}
 {% block page-specific-content %}
+<div class="checkout-main">
     <div class="checkout-container">
         <div class="payment-details">
             <div class="payment-details-title">
@@ -18,10 +30,12 @@
         </div>
         <h4 class="amount-to-pay-label">Amount to pay: <span class="amount-to-pay">₦{{amount_to_pay|floatformat:2|intcomma}}</span></h4>
         <p class="payment-note">please ensure the amount sent is the same as what is displayed above. </p>
-        <form method="POST" enctype="multipart/form" action="{% url 'checkout' %}">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'payment' %}">
             {% csrf_token %}
         <label>Upload proof of payment<input type="file" name="image" class="payment-proof" required>
-        <button class="payment-completed">I Have completed payment</button> 
+        <button class="payment-completed" type="submit">I Have completed payment</button> 
         <form>       
     </div>
+    <div class="checkout-image"></div>
+</div>
 {% endblock %}

@@ -315,7 +315,9 @@ def add_to_cart(request):
                             item.save()
                             break
                     else:
-                        new_item = CartItem.objects.create(item=cart_exist, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price,total=product_total, item_image=product_image)
+                        new_item = CartItem.objects.create(item=cart_exist, product_id=product_id,
+                                                           product_name=product_name, quantity=product_quantity,
+                                                           price=product_price,total=product_total, item_image=product_image)
                         new_item.save()
                         
                     cart_exist.total_cost += product_quantity * product_price
@@ -328,7 +330,9 @@ def add_to_cart(request):
                     new_cart = Cart.objects.create(user=user)
                     new_cart.total_cost += total_cost
                     new_cart.save()
-                    new_item = CartItem.objects.create(item=new_cart, product_id=product_id, product_name=product_name, quantity=product_quantity, price=product_price,total=product_total, item_image=product_image)
+                    new_item = CartItem.objects.create(item=new_cart, product_id=product_id, product_name=product_name,
+                                                       quantity=product_quantity, price=product_price,total=product_total,
+                                                       item_image=product_image)
                     new_item.save()
                     return redirect("home")
                      
@@ -422,6 +426,45 @@ def checkout(request):
         }
     
     return render(request, "checkout.html", context)
+
+def payment(request):
+    print(request.method)
+    if request.method == "POST":
+        user = Our_user.objects.get(user=request.user)
+        cart = Cart.objects.get(user=user)
+        payment_proof = request.FILES.get("image")
+        print("GOT HERE", payment_proof)
+        if payment_proof:
+            try:
+                global result
+                result = upload(payment_proof)
+            except Exception as e:
+                messages.info(request, "Something went wrong, Please try again later")
+                return checkout(request)
+            
+            payment_proof_image = result.get("secure_url")
+            payment_prrof_public_id = result.get("public_id")
+            
+            global user_pending_order
+            user_pending_order = Pending_Order.objects.create(user=user, total_cost=cart.total_cost, 
+                                proof_of_payment=payment_proof_image, public_id=payment_prrof_public_id)
+            user_pending_order.save()
+            cart_items = cart.cart_item.all()
+            
+            for items in cart_items:
+                pending_item = Pending_order_items.objects.create(order=user_pending_order, item_name=items.product_name,
+                                                            item_quantity=items.quantity, item_price=items.price,
+                                                            item_total_cost=items.total)
+                pending_item.save()
+                
+            cart.delete()    
+            return redirect("home")
+        
+    return redirect("view-cart")
+            
+                
+            
+        
         
             
         
