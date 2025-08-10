@@ -677,7 +677,8 @@ a {
     height: 25%;
 }
 
-.remove-item {
+.remove-item,
+.order-confirmed-btn {
     color: #f7f7f7;
     background-color: rgb(186, 50, 102);
     border-radius: 20px;
@@ -880,6 +881,33 @@ a {
 .checkout-image {
     background-color: red;
     height: 100%;
+}
+
+.pending-search-by-container {
+    margin-top: 100px;
+    margin-left: 30px;
+}
+
+.pending-order-list{
+    justify-items: center;
+    align-items: center;
+}
+
+.pending-order-messages {
+    margin-left: 30px;
+    margin-top: 20px;
+    font-size: medium;
+    color: red;
+}
+
+.pending-orders-container,
+.confirmed-orders-container {
+    padding-bottom: 50px;
+}
+
+.confirmed-orders-container {
+    grid-template-columns: repeat(5, 1fr);
+
 }
 
 

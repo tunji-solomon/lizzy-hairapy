@@ -39,8 +39,8 @@
     <div class="admin-page-container">
         <a href="{% url 'add-product' %}"><div class="admin-cards add-product" >ADD PRODUCT</div></a>
         <a href="{% url 'update-product' %}"><div class="admin-cards update-product">UPDATE PRODUCT</div></a>
-        <a><div class="admin-cards completed-order">COMPLETED ORDERS</div></a>
-        <a><div class="admin-cards pending-order">PENDING ORDERS</div></a>
+        <a href="{% url 'confirmed-orders' %}"><div class="admin-cards completed-order">COMPLETED ORDERS</div></a>
+        <a href="{% url 'pending-orders' %}"><div class="admin-cards pending-order">PENDING ORDERS</div></a>
         <a href="{% url 'create-admin' %}"><div class="admin-cards create-admin">CREATE ADMIN</div></a>
         <a><div class="admin-cards delete-product">DELETE PRODUCT</div></a>
     </div>

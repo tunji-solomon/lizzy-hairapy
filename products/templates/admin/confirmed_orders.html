@@ -1,0 +1,51 @@
+{% extends '../base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <h2 class="cart-header">CONFIRMED ORDERS</h2>
+    <form method="POST" action="{% url 'pending-orders'%}">
+        {% csrf_token %}
+        <div class="pending-search-by-container">
+            <label class="serach-by-label">Search by</label><input type="text" list="search-by" name="search-by" class="search-by">
+            <datalist id="search-by">
+                <option value="username">
+                <option value="orderId">
+            </datalist>
+            <input type="text" placeholder="enter search" name="query" class="search-by-others">
+            <button class="serach-by-button" type="submit">Search</button>
+        </div>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="pending-order-messages">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    </form>
+        <div class="cart-container confirmed-orders-container ">
+            <div class="cart-column-headers-container grid-4">
+                <p class="cart-column-headers">Username</p>
+                <p class="cart-column-headers">OrderId</p>
+                <p class="cart-column-headers">DETAILS</p>
+                <p class="cart-column-headers">Total cost</p>
+            </div>
+            {% if orders %}
+                {% for order in orders %}
+                    <div class="cart-items-container pending-order-list">
+                        <div>
+                            {{order.user.username}}
+                        </div>
+                        <div>
+                            {{order.orderId}}
+                        </div>
+                        <a href="{{order.proof_of_payment}}">
+                            click here  
+                        </a>
+                        <div>
+                        {{order.total_cost}}
+                        </div>
+                        <div>
+                            <a href="{% url 'confirm-order' order.user.username %}" class="order-confirmed-btn">Confirm order</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+      
+{% endblock %}

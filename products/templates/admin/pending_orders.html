@@ -1,0 +1,58 @@
+{% extends '../base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <h2 class="cart-header">PENDING ORDERS</h2>
+    <form method="POST" action="{% url 'pending-orders'%}">
+        {% csrf_token %}
+        <div class="pending-search-by-container">
+            <label class="serach-by-label">Search by</label><input type="text" list="search-by" name="search-by" class="search-by">
+            <datalist id="search-by">
+                <option value="username">
+                <option value="orderId">
+                <option value="date">
+            </datalist>
+            <input type="date" name="date" name="date" class="search-by-date">
+            <input type="text" placeholder="enter search" name="query" class="search-by-others">
+            <button class="serach-by-button" type="submit">Search</button>
+        </div>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="pending-order-messages">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    </form>
+        <div class="cart-container pending-orders-container">
+            <div class="cart-column-headers-container grid-4">
+                <p class="cart-column-headers">Username</p>
+                <p class="cart-column-headers">OrderId</p>
+                <p class="cart-column-headers">Total cost</p>
+                <p class="cart-column-headers">Proof of payment</p>
+                <p class="cart-column-headers">Date created</p>
+            </div>
+            {% if pending_orders %}
+                {% for order in pending_orders %}
+                    <div class="cart-items-container pending-order-list">
+                        <div>
+                            {{order.user.username}}
+                        </div>
+                        <div>
+                            {{order.orderId}}
+                        </div>
+                        <div>
+                        {{order.total_cost}}
+                        </div>
+                        <a href="{{order.proof_of_payment}}">
+                            click here  
+                        </a>
+                        <div >
+                            {{order.created_at}}
+                        </div>
+                        <div>
+                            <a href="{% url 'confirm-order' order.orderId %}" class="order-confirmed-btn">Confirm order</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+      
+{% endblock %}

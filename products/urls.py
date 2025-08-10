@@ -18,4 +18,7 @@ urlpatterns = [
     path("admin/create-admin/", views.create_admin, name="create-admin"),
     path("admin/add-product/", views.add_product, name="add-product"),
     path("admin/update-product/", views.update_product, name="update-product"),
+    path("admin/pending-orders/", views.pending_orders, name="pending-orders"),
+    path("admin/confirm-order/<str:orderId>", views.confirm_order, name="confirm-order" ),
+    path("confirmed-orders/", views.confirmed_orders, name="confirmed-orders"),
 ]

@@ -14,6 +14,7 @@
     </style>
 {% endblock %}
 {% block page-specific-content %}
+
 <div class="checkout-main">
     <div class="checkout-container">
         <div class="payment-details">
@@ -36,6 +37,11 @@
         <button class="payment-completed" type="submit">I Have completed payment</button> 
         </form>       
     </div>
+    {% if messages %}
+        {% for message in messages%}
+            <p>{{message}}</p>
+        {% endfor %}
+    {% endif %}
     <div class="checkout-image"></div>
 </div>
 {% endblock %}

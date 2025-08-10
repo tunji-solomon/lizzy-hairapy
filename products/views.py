@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 import re
 import random
+from django.db.models import Q
 
 
 # Create your views here.
@@ -396,7 +397,7 @@ def delete_cart(request):
     cart.delete()
     return view_cart(request)
     
-def checkout(request):
+def checkout(request, context=None):
     if request.method == "POST":
         total_items_count = int(request.POST.get("total_item_count"))
         for i in range(total_items_count):
@@ -433,18 +434,27 @@ def payment(request):
         user = Our_user.objects.get(user=request.user)
         cart = Cart.objects.get(user=user)
         payment_proof = request.FILES.get("image")
-        print("GOT HERE", payment_proof)
         if payment_proof:
             try:
                 global result
                 result = upload(payment_proof)
             except Exception as e:
                 messages.info(request, "Something went wrong, Please try again later")
-                return checkout(request)
+                amount_to_pay = cart.total_cost
+                cart_count = len(cart.cart_item.all())
+                related_product = Products.objects.all()
+                context = {
+                    "amount_to_pay": amount_to_pay,
+                    "cart_count": cart_count,
+                    "related_products": related_product
+                }
+                request.method = "GET"
+                return checkout(request, context)
             
             payment_proof_image = result.get("secure_url")
             payment_prrof_public_id = result.get("public_id")
-            
+
+                
             global user_pending_order
             user_pending_order = Pending_Order.objects.create(user=user, total_cost=cart.total_cost, 
                                 proof_of_payment=payment_proof_image, public_id=payment_prrof_public_id)
@@ -461,6 +471,68 @@ def payment(request):
             return redirect("home")
         
     return redirect("view-cart")
+
+def pending_orders(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        pending = Pending_Order.objects.all()
+        if request.method == "POST":
+            search_by = request.POST.get("search-by")
+            query = request.POST.get("query", '')
+            date = request.POST.get("date", "")
+            print(search_by, query,date)
+            if date:
+                pending = Pending_Order.objects.filter(created_at=date).order_by("created_at")
+                if not pending:
+                    messages.info(request, "No order found for this date", extra_tags="date")
+                    return render(request, "admin/pending_orders.html")
+            else:
+                if not query == "":
+                    if search_by == "username":
+                        try:
+                            user = Our_user.objects.get(username=query)
+                            pending = Pending_Order.objects.filter(user=user).order_by("created_at")
+                        except Exception:
+                            messages.info(request, "No order found for specified user", extra_tags="username")
+                            return render(request, "admin/pending_orders.html")
+
+                    if search_by == "orderId":
+                        pending = Pending_Order.objects.filter(orderId=query).order_by("created_at")
+                else:
+                    return redirect("home")
+                    
+            # query = request.POST.get("query")
+            # pending = Pending_Order.objects.filter(Q(user_icontains= query) | Q(orderId_icontains=query)).order_by("created_at", "DESC")
+             
+        return render(request, "admin/pending_orders.html", {"pending_orders": pending})
+    else:
+        return redirect("home")
+    
+def confirm_order(request, orderId):
+    if request.user.is_authenticated and request.user.is_superuser:
+        user_order = Pending_Order.objects.get(orderId=orderId)
+        user = user_order.user
+        order_items = user_order.pending_order_item.all()
+        confirmed_order = Confirmed_Order.objects.create(user=user, orderId=orderId, total_cost=user_order.total_cost)
+        
+        #get all pending order items
+        for item in order_items:
+            Confirmed_order_items.objects.create(order=confirmed_order, item_name=item.item_name, item_quantity=item.item_quantity,
+                                                 item_price=item.item_price, item_total_cost=item.item_total_cost)
+            
+        user_order.delete()
+        
+        return pending_orders(request)
+    
+def confirmed_orders(request):
+    orders = Confirmed_Order.objects.all()
+    
+    return render(request, "admin/confirmed_orders.html", {"orders": orders})
+        
+        
+        
+        
+        
+    
             
                 
             

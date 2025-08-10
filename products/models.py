@@ -63,7 +63,7 @@ class Pending_Order(models.Model):
     total_cost = models.FloatField(blank=False)
     proof_of_payment = models.URLField(max_length=500, blank=False)
     public_id = models.CharField(max_length=200, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
 
     def generate_order_id(self):
         import random
@@ -82,6 +82,30 @@ class Pending_Order(models.Model):
     
 class Pending_order_items(models.Model):
     order = models.ForeignKey(Pending_Order, related_name="pending_order_item", on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=200, blank=False)
+    item_quantity = models.IntegerField(blank=False)
+    item_price = models.FloatField(blank=False)
+    item_total_cost = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
+    
+    
+    def __str__(self):
+        return f"name:{self.item_name} with quantity of {self.item_quantity} at price of {self.item_price} each by {self.order.user}. --> total:{self.item_total_cost}"
+    
+
+class Confirmed_Order(models.Model):
+    user = models.ForeignKey(
+        Our_user,  
+        related_name="confirmed_user_order",
+        on_delete=models.CASCADE
+    )
+    orderId = models.CharField(max_length=100, unique=True, blank=True)
+    total_cost = models.FloatField(blank=False)
+    
+    def __str__(self):
+        return f"{self.user.username}"
+    
+class Confirmed_order_items(models.Model):
+    order = models.ForeignKey(Confirmed_Order, related_name="confirmed_order_items", on_delete=models.CASCADE)
     item_name = models.CharField(max_length=200, blank=False)
     item_quantity = models.IntegerField(blank=False)
     item_price = models.FloatField(blank=False)
