@@ -336,7 +336,8 @@ a {
 .btn-add-cart:hover,
 .remove-item:hover,
 .cart-button:hover,
-.payment-completed:hover{
+.payment-completed:hover,
+.order-confirmed-btn:hover{
     background-color: rgba(186, 50, 102, 0.86);
 }
 
@@ -346,7 +347,8 @@ a {
 .btn-add-cart:active,
 .remove-item:active,
 .cart-button:active,
-.payment-completed:active {
+.payment-completed:active,
+.order-confirmed-btn:active {
     color:#f7f7f7;
     background-color: rgba(186, 50, 102, 0.618);
 }
@@ -687,6 +689,10 @@ a {
     font-size: small;
     padding: 5px;
     border: none;
+}
+
+.order-confirmed-btn {
+    padding: 10px;
 }
 
 .total-cost-container {

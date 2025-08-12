@@ -17,6 +17,7 @@ import cloudinary.uploader
 import cloudinary.api
 from dotenv import load_dotenv
 load_dotenv()
+import redis
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z%*ivqb71ni=d8(+vv%0r)bqfu#c0$ut8ar=8!^ev_6^su@!5+'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -136,3 +137,28 @@ cloudinary.config(secure=True)
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CELERY_BROKER_URL= os.environ.get("REDIS_URL")
+# CELERY_RESULT_BACKEND= CELERY_BROKER_URL
+CELERY_BROKER_URL=redis.Redis(
+    host='redis-17540.c258.us-east-1-4.ec2.redns.redis-cloud.com',
+    port=17540,
+    username="default",
+    password="gCdGNwoVYS7afF8cs07XqJjdF9BZtXD5",
+)
+
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
+
+EMAIL_BACKEND= os.environ.get("EMAIL_BACKEND")
+EMAIL_HOST= os.environ.get("EMAIL_HOST")
+EMAIL_PORT= os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER= os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD= os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
