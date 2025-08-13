@@ -16,3 +16,7 @@ def send_welcome_email(self, subject, message, recipient_list, from_email=None):
         )
     except Exception as exc:
         raise self.retry(exc=exc)
+    
+@shared_task(bind=True)
+def add(self, a, b):
+    return a + b

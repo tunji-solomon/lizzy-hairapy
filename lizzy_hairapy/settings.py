@@ -18,6 +18,7 @@ import cloudinary.api
 from dotenv import load_dotenv
 load_dotenv()
 import redis
+from ssl import CERT_REQUIRED
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,14 +139,9 @@ cloudinary.config(secure=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CELERY_BROKER_URL= os.environ.get("REDIS_URL")
-# CELERY_RESULT_BACKEND= CELERY_BROKER_URL
-CELERY_BROKER_URL=redis.Redis(
-    host='redis-17540.c258.us-east-1-4.ec2.redns.redis-cloud.com',
-    port=17540,
-    username="default",
-    password="gCdGNwoVYS7afF8cs07XqJjdF9BZtXD5",
-)
+CELERY_BROKER_URL= "redis://default:gCdGNwoVYS7afF8cs07XqJjdF9BZtXD5@redis-17540.c258.us-east-1-4.ec2.redns.redis-cloud.com:17540/0"
+CELERY_RESULT_BACKEND= CELERY_BROKER_URL
+
 
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
@@ -154,7 +150,7 @@ CELERY_TIMEZONE = "UTC"
 
 EMAIL_BACKEND= os.environ.get("EMAIL_BACKEND")
 EMAIL_HOST= os.environ.get("EMAIL_HOST")
-EMAIL_PORT= os.environ.get("EMAIL_HOST")
+EMAIL_PORT= os.environ.get("EMAIL_PORT")
 EMAIL_HOST_USER= os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD= os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
