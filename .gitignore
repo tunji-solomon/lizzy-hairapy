@@ -1,3 +1,8 @@
 lizzy
 db.sqlite3
 .env
+redis_ca.pem
+redis_ca.zip
+celery_test.py
+
+

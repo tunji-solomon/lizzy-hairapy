@@ -139,7 +139,7 @@ cloudinary.config(secure=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL= "redis://default:gCdGNwoVYS7afF8cs07XqJjdF9BZtXD5@redis-17540.c258.us-east-1-4.ec2.redns.redis-cloud.com:17540/0"
+CELERY_BROKER_URL= os.environ.get("REDIS_URL")
 CELERY_RESULT_BACKEND= CELERY_BROKER_URL
 
 
