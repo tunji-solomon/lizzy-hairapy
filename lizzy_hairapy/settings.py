@@ -17,8 +17,22 @@ import cloudinary.uploader
 import cloudinary.api
 from dotenv import load_dotenv
 load_dotenv()
-import redis
-from ssl import CERT_REQUIRED
+import ssl
+
+
+CELERY_BROKER_URL= os.environ.get("REDIS_URL")
+#  = {
+#     'ssl_cert_reqs': CERT_REQUIRED
+# }
+# Secure SSL settings for Redis Cloud
+
+CELERY_RESULT_BACKEND= CELERY_BROKER_URL
+
+
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -139,14 +153,6 @@ cloudinary.config(secure=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL= os.environ.get("REDIS_URL")
-CELERY_RESULT_BACKEND= CELERY_BROKER_URL
-
-
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE = "UTC"
 
 EMAIL_BACKEND= os.environ.get("EMAIL_BACKEND")
 EMAIL_HOST= os.environ.get("EMAIL_HOST")

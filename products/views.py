@@ -174,9 +174,13 @@ def login_user(request):
                subject= "LOGIN SUCCESSFUL"
                message= f"{user.username}, your account was accessed today at {datetime.date.today()}"
                recipient= [user.email,]
-               
-               send_welcome_email.delay(subject, message, recipient)
-               
+               try:
+                    send_welcome_email.delay(subject, message, recipient)
+               except Exception as e:
+                       
+                import traceback
+                print("EMAIL ERROR:", traceback.format_exc())              
+
                return redirect('home')
            else:
                messages.error(request, "Invalid credentials", extra_tags="wrong_credentials")
