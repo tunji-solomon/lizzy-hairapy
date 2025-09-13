@@ -18,6 +18,6 @@ def send_welcome_email(self, subject, message, recipient_list, from_email=None):
         logging.exception("Error while sending email from Celery task")
         raise self.retry(exc=exc)
     
-@shared_task(bind=True)
-def add(self, a, b):
+@shared_task
+def add(a, b):
     return a + b

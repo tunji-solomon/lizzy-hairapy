@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block custom-style %}{% endblock %}
+{% block content %}
+<div class="profile-container">
+    <div class="profile-left-container">
+        <button class="left-items details">details</button>
+        <button class="left-items order">order history</button>
+        <button class="left-items wishlist">Wishlist</button>
+        <button class="left-items delete">delete account</button>
+    </div>
+    <div class="profile-right-container">
+        {% if user %}
+            <div class="user-profile-details">
+                <div>username - <span class="details-info">{{user.username}}</span></div>
+                <div>email - <span class="details-info">{{user.email}}</span></div>
+            </div>
+            <a class="profile-update-btn">Update details</a>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

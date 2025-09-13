@@ -191,6 +191,12 @@ def logout_user(request):
     logout(request)
     return redirect("home")
 
+def user_profile(request):
+    if request.method == "POST":
+        pass
+    user = Our_user.objects.get(user=request.user)
+    return render(request, "profile.html", {"user": user})
+
 product_update = None
 def update_product(request):
     if request.user.is_authenticated and request.user.is_superuser:
