@@ -338,8 +338,10 @@ a {
 .cart-button:hover,
 .payment-completed:hover,
 .order-confirmed-btn:hover,
-.profile-update-btn:hover {
+.profile-update-btn:hover,
+.left-items:hover {
     background-color: rgba(186, 50, 102, 0.86);
+    color: #f7f7f7;
 }
 
 .add-to-cart:active,
@@ -350,7 +352,7 @@ a {
 .cart-button:active,
 .payment-completed:active,
 .order-confirmed-btn:active,
-.profile-update-btn:active  {
+.profile-update-btn:active {
     color:#f7f7f7;
     background-color: rgba(186, 50, 102, 0.618);
 }
@@ -923,7 +925,7 @@ a {
     width: 50%;
     margin: 100px 0px;
     display: flex;
-    height: 400px;
+    height: 200px;
 }
 
 .profile-left-container,
@@ -937,31 +939,44 @@ a {
 .left-items {
     text-align: center;
     align-content: center;
+    background-color: #f7f7f7;
     border: 0.1px solid rgba(0, 0, 0, 0.225);
+    font-size: large;
+}
+
+.left-items:hover {
+    background-color: rgba(0, 0, 0, 0.225);
+    color: #f7f7f7;
+}
+
+.profile-page-active {
+    background-color: rgba(24, 24, 24, 0.807);
+    color: #f7f7f7;
 }
 
 .user-profile-details {
     display: grid;
-    font-size: x-large;
+    font-size: large;
     font-family: Arial, Helvetica, sans-serif;
     gap: 10px;
 }
 
 .details-info {
     color : rgb(186, 50, 102);
+    font-weight: lighter;
 }
 
 .profile-right-container {
     flex: 1;
-    height: 200px;
-    padding: 50px;
+    padding: 30px;
+    margin-left: 30px;
     border: 0.2px solid rgba(0, 0, 0, 0.225);
 }
 
 .profile-update-btn {
-    width: 150px;
-    height: 40px;
-    font-size: medium;
+    width: 100px;
+    height: 30px;
+    font-size: small;
     text-align: center; 
     align-content: center;
     padding: 0px 0px;   

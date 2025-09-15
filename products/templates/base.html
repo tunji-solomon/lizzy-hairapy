@@ -36,14 +36,15 @@
                 {% endif %}
                 <a href="{% url 'logout' %}"><p class="navbar-items"><i class="fa-solid fa-arrow-right-from-bracket"></i></p></a>
             {% else %}
-            <a href="{% url 'sign-up' %}"><p class="navbar-items">Sign up</p></a>
-            <a href="{% url 'login' %}"><p class="navbar-items">login</p></a>
+                <a href="{% url 'sign-up' %}"><p class="navbar-items">Sign up</p></a>
+                <a href="{% url 'login' %}"><p class="navbar-items">login</p></a>
             {% endif %}
         </div>
     </div>
     
     {% block content %}
-
+    {% endblock %}
+    {% block related-products %}
     {% endblock %}
     <script src="{% static '../static/js/index.js' %}"></script>
     <script src="https://kit.fontawesome.com/3df687ad82.js" crossorigin="anonymous"></script>

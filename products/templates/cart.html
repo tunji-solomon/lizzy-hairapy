@@ -90,6 +90,10 @@
         {% endfor %}
     {% endif %}
     {% endblock %}
+    
+{% endblock %}
+
+{% block related-products %}
     <h2 class="related-product-header">Related products</h2>
     <div class="few-products-container grid-4">
         {% for product in related_products %}

@@ -13,6 +13,16 @@ import datetime
 
 # Create your views here.
 saved_paginated_products = None
+
+def get_cart_count(request):
+    if request.user.is_authenticated:
+        user = Our_user.objects.get(username=request.user)
+        user_cart = Cart.objects.get(user=user)
+        user_cart_count = len(user_cart.cart_item.all())
+        return user_cart_count
+    return None
+    
+    
 def home(request, page=None):
     if request.user.is_superuser == False:
         global saved_paginated_products
@@ -56,18 +66,6 @@ def home(request, page=None):
                         all_product = Products.objects.filter(category__title = category)
                 saved_paginated_products = all_product
                 
-        if request.user.is_authenticated:
-            if request.user.is_authenticated:
-                user = Our_user.objects.get(username = request.user.username)
-                
-                cart_exist = Cart.objects.filter(user=user).first() 
-                try:
-                    global cart_count
-                    cart_count = len(cart_exist.cart_item.all()) 
-                except Exception:
-                    cart_count = None
-        else:
-            cart_count = None
                 
         paginated_product = Paginator(saved_paginated_products.order_by("price"), 20)
         product_pages = paginated_product.get_page(page)
@@ -75,7 +73,7 @@ def home(request, page=None):
         context = {
             "categories" : categories,
             "products" : all_product,
-            "cart_count" : cart_count
+            "cart_count" : get_cart_count(request)
         }
         
         
@@ -163,6 +161,37 @@ def sign_up(request):
     else:
         return render(request, "registration.html")
     
+def user_profile(request):
+    if request.user.is_authenticated:
+        user = Our_user.objects.get(user=request.user)
+        products = Products.objects.all().order_by("price")
+        context = {
+            "user_profile": user,
+            "related_products": products,
+            "cart_count": get_cart_count(request)   
+        }
+        
+    return render(request, "profile.html", context)
+
+def user_order_history(request):
+    
+    user = Our_user.objects.get(username=request.user.username)
+    pending_orders = Pending_Order.objects.filter(user=user).first()
+    confirmed_orders = Confirmed_Order.objects.filter(user=user).first()
+    products = Products.objects.all().order_by("price")
+
+    context = {
+        "orders" : {
+            "pending" : pending_orders,
+            "confirmed" : confirmed_orders 
+        },
+        "cart_count" : get_cart_count(request),
+        "related_products": products
+    }
+    return render(request, "order_history.html", context)
+    
+    
+    
 
 def login_user(request):
         if request.method == 'POST':
@@ -191,11 +220,6 @@ def logout_user(request):
     logout(request)
     return redirect("home")
 
-def user_profile(request):
-    if request.method == "POST":
-        pass
-    user = Our_user.objects.get(user=request.user)
-    return render(request, "profile.html", {"user": user})
 
 product_update = None
 def update_product(request):
@@ -389,7 +413,7 @@ def view_cart(request, total_cost=None):
         context = {
             "cart":existing_cart,
             "cart_total": total_cost if total_cost is not None else user_cart.total_cost,
-            "cart_count": len(existing_cart),
+            "cart_count": get_cart_count(request),
             "related_products": related_product
         }            
         return render(request, "cart.html", context)
@@ -458,11 +482,10 @@ def payment(request):
             except Exception as e:
                 messages.info(request, "Something went wrong, Please try again later")
                 amount_to_pay = cart.total_cost
-                cart_count = len(cart.cart_item.all())
                 related_product = Products.objects.all()
                 context = {
                     "amount_to_pay": amount_to_pay,
-                    "cart_count": cart_count,
+                    "cart_count": get_cart_count(request),
                     "related_products": related_product
                 }
                 request.method = "GET"
@@ -544,6 +567,8 @@ def confirmed_orders(request):
     orders = Confirmed_Order.objects.all()
     
     return render(request, "admin/confirmed_orders.html", {"orders": orders})
+
+
         
         
         
