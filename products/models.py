@@ -30,8 +30,7 @@ class Our_user(models.Model):
     email = models.EmailField(blank=False, unique=True)
     password = models.CharField(blank=False)
     
-    def __str__(self):
-        return self.username
+
     
 class Cart(models.Model):
     user = models.OneToOneField(Our_user, related_name="user_cart", on_delete=models.CASCADE)

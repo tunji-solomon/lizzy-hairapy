@@ -140,16 +140,16 @@ function confirmAction(container, action){
     // }
 }
 
-function profileItems(allItems, activeItem) {
-    const itemsList = document.querySelectorAll(`.${allItems}`)
-    itemsList.forEach(item => {
-        if(item.classList.contains(activeItem)){
-            item.classList.add("profile-page-active")
-        }else {
-            item.classList.remove("profile-page-active")
-        }
-    })
-}
+// function profileItems(allItems, activeItem) {
+//     const itemsList = document.querySelectorAll(`.${allItems}`)
+//     itemsList.forEach(item => {
+//         if(item.classList.contains(activeItem)){
+//             item.classList.add("profile-page-active")
+//         }else {
+//             item.classList.remove("profile-page-active")
+//         }
+//     })
+// }
 
 
 

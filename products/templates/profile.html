@@ -1,25 +1,38 @@
 {% extends 'cart.html' %}
 {% load humanize %}
 {% block title %}{% endblock %}
-{% block custom-style %}{% endblock %}
+{% block custom-style %}
+    <style>
+        .details {
+                background-color: rgba(24, 24, 24, 0.807);
+                color: #f7f7f7;
+        }
+    </style>
+{% endblock %}
 {% block content %}
+    <h2 class="cart-header">
+        {% block heading %} 
+        USER PROFILE
+        {% endblock %}
+    </h2>
     <div class="profile-container">
         <div class="profile-left-container">
-            <button class="left-items profile-page-active details" onclick="profileItems('left-items', 'details')">details</button>
-            <a href="{% url 'order-history' %}"><button class="left-items order" onclick="profileItems('left-items', 'order')">order history</button><a/>
-            <button class="left-items wishlist" onclick="profileItems('left-items', 'wishlist')">Wishlist</button>
-            <button class="left-items delete" onclick="profileItems('left-items', 'delete')">delete account</button>
+            <a href="{% url 'user-profile' %}"><button class="left-items details">details</button><a/>
+            <a href="{% url 'order-history' %}"><button class="left-items order">order history</button><a/>
+            <a href="#"><button class="left-items wishlist">Wishlist</button><a/>
+            <a href="#"><button class="left-items delete">delete account</button><a/>
         </div>
-        <div class="profile-right-container">
-            {% if user_profile %}
-                <div class="user-profile-details">
-                    <div>username - <span class="details-info">{{user_profile.username}}</span></div>
-                    <div>email - <span class="details-info">{{user_profile.email}}</span></div>
-                </div>
-                <a class="profile-update-btn">Update details</a>
-            {% endif %}
-        </div>
-
+        {% block right_container %}
+            <div class="profile-right-container">
+                {% if user_profile %}
+                    <div class="user-profile-details">
+                        <div class="user-details">username - <span class="details-info">{{user_profile.username}}</span></div>
+                        <div class="user-details">email - <span class="details-info">{{user_profile.email}}</span></div>
+                    </div>
+                    <a class="profile-update-btn">Update details</a>
+                {% endif %}
+            </div>
+        {% endblock %} 
     </div>
 {% endblock %}
 

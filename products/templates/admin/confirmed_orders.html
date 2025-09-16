@@ -1,8 +1,9 @@
 {% extends '../base.html' %}
+{% load humanize %}
 {% block title %}{% endblock %}
 {% block content %}
     <h2 class="cart-header">CONFIRMED ORDERS</h2>
-    <form method="POST" action="{% url 'pending-orders'%}">
+    <form method="POST" action="{% url 'confirmed-orders'%}">
         {% csrf_token %}
         <div class="pending-search-by-container">
             <label class="serach-by-label">Search by</label><input type="text" list="search-by" name="search-by" class="search-by">
@@ -23,8 +24,8 @@
             <div class="cart-column-headers-container grid-4">
                 <p class="cart-column-headers">Username</p>
                 <p class="cart-column-headers">OrderId</p>
-                <p class="cart-column-headers">DETAILS</p>
-                <p class="cart-column-headers">Total cost</p>
+                <p class="cart-column-headers">Details</p>
+                <p class="cart-column-headers">Total Cost</p>
             </div>
             {% if orders %}
                 {% for order in orders %}
@@ -39,13 +40,11 @@
                             click here  
                         </a>
                         <div>
-                        {{order.total_cost}}
-                        </div>
-                        <div>
-                            <a href="{% url 'confirm-order' order.user.username %}" class="order-confirmed-btn">Confirm order</a>
+                        {{order.total_cost|floatformat:2|intcomma}}
                         </div>
                     </div>
                 {% endfor %}
             {% endif %}
+        </div>
       
 {% endblock %}

@@ -17,9 +17,10 @@ saved_paginated_products = None
 def get_cart_count(request):
     if request.user.is_authenticated:
         user = Our_user.objects.get(username=request.user)
-        user_cart = Cart.objects.get(user=user)
-        user_cart_count = len(user_cart.cart_item.all())
-        return user_cart_count
+        user_cart = Cart.objects.filter(user=user).first()
+        if user_cart is not None :
+            user_cart_count = len(user_cart.cart_item.all())
+            return user_cart_count
     return None
     
     
@@ -176,15 +177,21 @@ def user_profile(request):
 def user_order_history(request):
     
     user = Our_user.objects.get(username=request.user.username)
-    pending_orders = Pending_Order.objects.filter(user=user).first()
-    confirmed_orders = Confirmed_Order.objects.filter(user=user).first()
+    pending_orders = Pending_Order.objects.filter(user=user)
+    confirmed_orders = Confirmed_Order.objects.filter(user=user)
     products = Products.objects.all().order_by("price")
+    
+    new_pending_order = []
+    for order in pending_orders:
+        new_pending_order.append({
+            "orderId":order.orderId,
+            "total_cost":order.total_cost,
+            "status":"pending"  
+        })
+    all_orders = [*confirmed_orders, *new_pending_order]
 
     context = {
-        "orders" : {
-            "pending" : pending_orders,
-            "confirmed" : confirmed_orders 
-        },
+        "orders" : all_orders,
         "cart_count" : get_cart_count(request),
         "related_products": products
     }
@@ -519,7 +526,6 @@ def pending_orders(request):
             search_by = request.POST.get("search-by")
             query = request.POST.get("query", '')
             date = request.POST.get("date", "")
-            print(search_by, query,date)
             if date:
                 pending = Pending_Order.objects.filter(created_at=date).order_by("created_at")
                 if not pending:
@@ -564,9 +570,39 @@ def confirm_order(request, orderId):
         return pending_orders(request)
     
 def confirmed_orders(request):
-    orders = Confirmed_Order.objects.all()
+    if request.user.is_authenticated and request.user.is_superuser:
+        confirmed_orders = Confirmed_Order.objects.all()
+        if request.method == "POST":
+            search_by = request.POST.get("search-by")
+            query = request.POST.get("query", '')
+            date = request.POST.get("date", "")
+            if date:
+                confirmed_orders = Confirmed_Order.objects.filter(created_at=date)
+                if not confirmed_orders:
+                    messages.info(request, "No order found for this date", extra_tags="date")
+                    return render(request, "admin/confrimed_orders.html")
+            else:
+                if not query == "":
+                    if search_by == "username":
+                        user = Our_user.objects.filter(username=query).first()
+                        confirmed_orders = Confirmed_Order.objects.filter(user=user)
+                        if not user :
+                            messages.info(request, "No order found for specified user", extra_tags="username")
+                            return render(request, "admin/confirmed_orders.html")
+
+                    if search_by == "orderId":
+                        confirmed_orders = Confirmed_Order.objects.filter(orderId=query)
+                else:
+                    return redirect("home")
+                    
+            # query = request.POST.get("query")
+            # pending = Pending_Order.objects.filter(Q(user_icontains= query) | Q(orderId_icontains=query)).order_by("created_at", "DESC")
+             
+        return render(request, "admin/confirmed_orders.html", {"orders": confirmed_orders})
+    else:
+        return redirect("home")
     
-    return render(request, "admin/confirmed_orders.html", {"orders": orders})
+    
 
 
         

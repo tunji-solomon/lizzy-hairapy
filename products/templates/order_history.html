@@ -1,5 +1,47 @@
-{% extends 'cart.html' %}
+{% extends 'profile.html' %}
 {% load humanize %}
-{% block content %}
-    <h2 class="cart-header">ORDER HISTORY</h2>
+{% block custom-style %}
+    <style>
+        .order {
+                background-color: rgba(24, 24, 24, 0.807);
+                color: #f7f7f7;
+        }
+    </style>
+{% endblock %}
+{% block heading %} Order History {% endblock %}
+{% block right_container %}
+    <div class="cart-container confirmed-orders-container order-history ">
+        <div class="cart-column-headers-container grid-4">
+            <p class="cart-column-headers">OrderId</p>
+            <p class="cart-column-headers">Order Details</p>
+            <p class="cart-column-headers">Total Cost(₦)</p>
+            <p class="cart-column-headers">Status</p>
+        </div>
+        {% if orders %}
+            {% for order in orders%}
+                <div class="cart-items-container">
+                    <div>
+                        {{order.orderId}}
+                    </div>
+                    <a href="{{order.proof_of_payment}}">
+                        click here  
+                    </a>
+                    <div>
+                    {{order.total_cost|floatformat:2|intcomma}}
+                    </div>
+                    {% if order.status%}
+                        <div>
+                            <div class="order-history-pending">{{order.status}}</div>
+                        </div>
+                    {% else %}
+                        <div>
+                            <div class="order-history-confirmed">Confirmed</div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
 {% endblock %}

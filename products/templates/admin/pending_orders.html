@@ -1,4 +1,5 @@
 {% extends '../base.html' %}
+{% load humanize %}
 {% block title %}{% endblock %}
 {% block content %}
     <h2 class="cart-header">PENDING ORDERS</h2>
@@ -39,7 +40,7 @@
                             {{order.orderId}}
                         </div>
                         <div>
-                        {{order.total_cost}}
+                        {{order.total_cost|floatformat:2|intcomma}}
                         </div>
                         <a href="{{order.proof_of_payment}}">
                             click here  
