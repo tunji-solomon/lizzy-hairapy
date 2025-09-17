@@ -151,6 +151,5 @@ function confirmAction(container, action){
 //     })
 // }
 
-
-
+document.getElementById("year").textContent = new Date().getFullYear();
 

@@ -16,7 +16,7 @@
     {% if cart %}
         <h2 class="cart-header">CART DETAILS</h2>
         <div class="cart-container">
-            <div class="cart-column-headers-container grid-4">
+            <div class="cart-column-headers-container">
                 <p></p>
                 <p class="cart-column-headers">Name</p>
                 <p class="cart-column-headers">Price(₦)</p>
@@ -27,7 +27,7 @@
             <form method="POST", action="{% url 'checkout' %}">
                 {% csrf_token %}
             {% for item in cart %}
-                <div class="cart-items-container grid-4">
+                <div class="cart-items-container">
                     <img src="{{item.item_image}}" alt="{{item.product_name}}" class="cart-items cart-product-img">
                     <input type="hidden" name="item-{{forloop.counter0}}-image" value="{{item.item_image}}">
 

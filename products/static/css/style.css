@@ -227,7 +227,7 @@ a {
     grid-template-columns: repeat(4, 1fr);
     justify-content: center;
     margin: 50px 20px;
-    margin-bottom: 200px;
+    margin-bottom: 50px;
     justify-content: space-between;
     gap: 20px;
     padding: 20px;
@@ -358,11 +358,22 @@ a {
 }
 
 .pagination {
-    margin-bottom: 100px;
+    display: block;
+    margin-bottom: 50px;
     font-family: Arial, Helvetica, sans-serif;
+
+}
+.order-history-paginated{
+    margin-top: 50px;
+    margin-bottom: 0px;
+    justify-self: center;
 }
 .pagination-control {
     color:rgb(186, 50, 102);
+}
+
+.copyright {
+    justify-self: center;
 }
 
 
@@ -565,6 +576,7 @@ a {
     margin-top: 100px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 .cart-empty-message {
     font-size: larger;
     font-weight: lighter;
@@ -649,6 +661,10 @@ a {
     border-bottom: 0.3px solid rgba(0, 0, 0, 0.225);
     padding: 10px 0px;
 
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .cart-product-img {

@@ -175,20 +175,28 @@ def user_profile(request):
     return render(request, "profile.html", context)
 
 def user_order_history(request):
-    
+    page = request.GET.get("page")
     user = Our_user.objects.get(username=request.user.username)
     pending_orders = Pending_Order.objects.filter(user=user)
     confirmed_orders = Confirmed_Order.objects.filter(user=user)
     products = Products.objects.all().order_by("price")
     
-    new_pending_order = []
+    all_orders = []
+    for order in confirmed_orders:
+        all_orders.append({
+            "orderId":order.orderId,
+            "total_cost":order.total_cost,
+        })
     for order in pending_orders:
-        new_pending_order.append({
+        all_orders.append({
             "orderId":order.orderId,
             "total_cost":order.total_cost,
             "status":"pending"  
         })
-    all_orders = [*confirmed_orders, *new_pending_order]
+    all_orders.sort(key=lambda item : item["total_cost"])
+    orders_paginated = Paginator(all_orders, 5)
+    orders_pages = orders_paginated.get_page(page)
+    all_orders = orders_pages
 
     context = {
         "orders" : all_orders,
