@@ -82,17 +82,17 @@
                     </div>
                 </form>
                 {% endfor %}
-                <div class="pagination">
-                    {% if products.has_previous %}
-                        <a href="?page={{ products.previous_page_number }} " class="pagination-control">Previous</a>
-                    {% endif %}
+            </div>
+            <div class="pagination">
+                {% if products.has_previous %}
+                    <a href="?page={{ products.previous_page_number }} " class="pagination-control">Previous</a>
+                {% endif %}
 
-                    <span> {{ products.number }} of {{ products.paginator.num_pages }} </span>
+                <span> {{ products.number }} of {{ products.paginator.num_pages }} </span>
 
-                    {% if products.has_next %}
-                        <a href="?page={{ products.next_page_number }}" class="pagination-control">Next</a>
-                    {% endif %}
-                </div>
+                {% if products.has_next %}
+                    <a href="?page={{ products.next_page_number }}" class="pagination-control">Next</a>
+                {% endif %}
             </div>
         {% else %}
             <h1 class="all-products-header">

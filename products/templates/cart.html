@@ -60,6 +60,17 @@
                     </div>
                 </div>
             {% endfor %}
+            <div class="pagination order-history-paginated">
+                {% if cart.has_previous %}
+                    <a href="?page={{ cart.previous_page_number }} " class="pagination-control">Previous</a>
+                {% endif %}
+
+                <span> {{ cart.number }} of {{ cart.paginator.num_pages }} </span>
+
+                {% if cart.has_next %}
+                    <a href="?page={{ cart.next_page_number }}" class="pagination-control">Next</a>
+                {% endif %}
+            </div>
             <div class="total-cost-container grid-2">
                 <div class="total-hidden-column"></div>
                 <h3 class="cart-total-title">Total Cost</h3>

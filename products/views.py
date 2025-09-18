@@ -409,6 +409,7 @@ def view_cart(request, total_cost=None):
         global related_product
         related_product = Products.objects.all()
         user = Our_user.objects.filter(user=request.user).first()
+        page = request.GET.get("page")
         try:
             user_cart = Cart.objects.get(user=user)
             existing_cart = user_cart.cart_item.all()
@@ -425,6 +426,11 @@ def view_cart(request, total_cost=None):
         else:
             related_product = [product for product in products] 
         # cart =  user_cart.cart_item.all()
+        
+        paginated_cart = Paginator(existing_cart, 5)
+        cart_page = paginated_cart.get_page(page)
+        existing_cart = cart_page
+        print("YES IT DOES",existing_cart.has_next)
         context = {
             "cart":existing_cart,
             "cart_total": total_cost if total_cost is not None else user_cart.total_cost,
